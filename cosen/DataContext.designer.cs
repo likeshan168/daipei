@@ -20,6 +20,7 @@ namespace cosen
 	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
+    using System.ComponentModel.DataAnnotations;
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="eissy")]
@@ -1263,7 +1264,8 @@ namespace cosen
 				}
 			}
 		}
-		
+		[Display(Name="促销短语")]
+        [Required(ErrorMessage="必填项")]
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_p_content", DbType="VarChar(1000) NOT NULL", CanBeNull=false)]
 		public string p_content
 		{
@@ -1283,7 +1285,8 @@ namespace cosen
 				}
 			}
 		}
-		
+        [Display(Name = "备注")]
+        //[Required(ErrorMessage = "必填项")]
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remark", DbType="VarChar(1000)")]
 		public string remark
 		{

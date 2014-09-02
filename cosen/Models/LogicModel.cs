@@ -810,7 +810,7 @@ namespace cosen.Models
                     return infos.OrderBy(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
             }
-            if (sort == "ssdate")//上市日期不排序，只进行筛选
+            else if (sort == "ssdate")//上市日期不排序，只进行筛选
             {
                 if (sortT == "empty")//获取上市日期为空的
                 {
@@ -870,7 +870,13 @@ namespace cosen.Models
                     return infos.Where(p => p.editionhandle == month).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
             }
-            else if (sort == "rknum")
+            else if (sort == "cxinfo")//促销信息过滤
+            {
+                if (!string.IsNullOrEmpty(styleNo))
+                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.p_id == int.Parse(sortT)).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                return infos.Where(p => p.p_id == int.Parse(sortT)).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            }
+            else if (sort == "rknum")//入库排序
             {
                 if (sortT == "desc")
                 {
