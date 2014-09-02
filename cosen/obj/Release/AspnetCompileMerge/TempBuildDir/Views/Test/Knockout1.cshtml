@@ -1,0 +1,20 @@
+﻿@{
+    Layout = null;
+    ViewBag.Title = "Knockout1";
+}
+
+<h2>Knockout1</h2>
+
+<div id="tjrows" style="overflow:auto;" data-bind="foreach:tjdates">
+
+    <a href='javascript:void(0);' onclick='showdp(this);' data-bind="attr:{title:tjdate}"><span data-bind="text:tjdate"></span></a><br />
+
+</div>
+<input type="button" data-bind="click:getdp" value="获取数据"/>
+
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/knockout")
+
+
+<script src="~/static/fileupload/js/bootstrap.js"></script>
+<script src="~/test/testone.js"></script>

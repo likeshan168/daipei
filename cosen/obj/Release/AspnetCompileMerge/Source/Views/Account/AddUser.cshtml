@@ -1,0 +1,49 @@
+﻿@model cosen.Models.LoginModel
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>欢迎来到Eissy乐园!</h1>
+
+            </hgroup>
+            <p>
+                Eissy作业指导管理系统.
+            </p>
+
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <h3>添加用户信息</h3>
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true)
+
+            <fieldset>
+                <legend>“用户”表单</legend>
+                <ol>
+                    <li>
+                        @Html.LabelFor(m => m.UserName)
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </li>
+                    <li>
+                        @Html.LabelFor(m => m.Password)
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </li>
+                    <li>
+
+                    </li>
+
+                </ol>
+                <input type="submit" value="添加" />
+            </fieldset>
+
+        }
+    </section>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>

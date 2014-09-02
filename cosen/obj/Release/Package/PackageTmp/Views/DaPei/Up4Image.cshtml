@@ -1,0 +1,41 @@
+﻿@model IEnumerable<string>
+
+
+<link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>欢迎来到作业指导管理系统!</h1>
+            </hgroup>
+        </div>
+    </section>
+
+    <section class="content-wrapper main-content clear-fix">
+        <form class="form-inline" role="form" method="post">
+            <div class="form-group">
+                <label class="sr-only">款式</label>
+                <p class="form-control-static">款式编号(支持模糊查询)</p>
+            </div>
+            <div class="form-group">
+                <label for="inputStyle" class="sr-only">款式编号</label>
+                <input type="text" value="@ViewData["styleNo"]" name="styleNo" class="form-control" id="inputStyle" placeholder="款式编号">
+            </div>
+            <button type="submit" class="btn btn-info">查询</button>
+        </form>
+
+        <ul>
+
+            @foreach (string item in Model)
+            {
+                <li><img width="100" height="100" src="/dapei/ShowImage?styleNo=@item" />@item</li>
+            }
+
+        </ul>
+    </section>
+</div>
+
+@*@section Scripts{
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/up4")
+    }*@

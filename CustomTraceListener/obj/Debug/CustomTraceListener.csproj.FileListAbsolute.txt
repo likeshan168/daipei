@@ -1,0 +1,12 @@
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\CustomTraceListener.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\CustomTraceListener.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\Microsoft.Practices.Unity.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Logging.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\bin\Debug\Microsoft.Practices.Unity.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\obj\Debug\CustomTraceListener.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\obj\Debug\CustomTraceListener.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\CustomTraceListener\obj\Debug\CustomTraceListener.csprojResolveAssemblyReference.cache

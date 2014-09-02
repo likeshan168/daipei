@@ -1,0 +1,25 @@
+﻿
+
+
+<div>
+    <input type="button" data-bind="click:function(item,evt){test(evt);}" value="单击"/>
+</div>
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/knockout")
+    <script type="text/javascript">
+        function TestViewModel() {
+            var self = this;
+            self.test = function (evt) {
+                console.log(evt.target);
+                console.log($(evt.target).val("ok"));
+            }
+        }
+        ko.applyBindings(new TestViewModel());
+    </script>
+}
+
+

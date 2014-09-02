@@ -1,0 +1,225 @@
+﻿@{
+
+    Layout = null;
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>图片上传</title>
+</head>
+<body>
+
+    <div id="body">
+        <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+        <!-- Generic page styles -->
+
+        <link href="~/static/fileupload/css/style.css" rel="stylesheet" />
+        <!-- blueimp Gallery styles -->
+        <link rel="stylesheet" href="~/static/fileupload/css/blueimp-gallery.min.css">
+        <!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+        <link href="~/static/fileupload/css/jquery.fileupload.css" rel="stylesheet" />
+        <link href="~/static/fileupload/css/jquery.fileupload-ui.css" rel="stylesheet" />
+
+
+        <div class="container">
+            <form id="fileupload" action="/api/DpApi/UploadImg" method="POST" enctype="multipart/form-data">
+                <!-- Redirect browsers with JavaScript disabled to the origin page -->
+                <noscript><input type="hidden" name="redirect" value="http://blueimp.github.io/jQuery-File-Upload/"></noscript>
+                <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+                <div class="row fileupload-buttonbar">
+                    <div class="col-lg-7">
+                        <!-- The fileinput-button span is used to style the file input field as button -->
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>选择图片</span>
+                            <input type="file" name="files[]" multiple="multiple">
+                        </span>
+                        <button type="submit" class="btn btn-primary start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>开始上传</span>
+                        </button>
+                        <button type="reset" class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>取消上传</span>
+                        </button>
+                        <button onclick='clearlog();' type="button" class="btn btn-info clear">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>清空记录</span>
+                        </button>
+                        <button type="button" class="btn btn-danger delete">
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>删除图片</span>
+                        </button>
+                        <input type="checkbox" class="toggle">
+                        <!-- The global file processing state -->
+                        <span class="fileupload-process"></span>
+                    </div>
+                    <div class='col-lg-7'>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="imgtype" value="single" checked>单款图(<span style="color:red;font-weight:bold;">备注</span>：<span style="color:blue;"><em>单款图都应该用款式加颜色的方式进行命名(如：33729-1401JB-))</em></span>
+                            </label>
+
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="imgtype" value="compose">
+                                搭配图(<span style="color:red;font-weight:bold;">备注</span>：<span style="color:blue;"><em>组合图都应该以主打款的款式加颜色命名，然后再加编号01、02等)</em></span>
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="imgtype" value="area">
+                                场地图(<span style="color:red;font-weight:bold;">备注</span>：<span style="color:blue;"><em>场地图要以店铺的编号命名)</em></span>
+                            </label>
+                            @Html.DropDownList("sltdp", ViewData["list"] as IEnumerable<SelectListItem>, new { id = "sltdp", @class = "form-control", style = "width:250px;display:none" })
+                        </div>
+                        @*<div>
+                                @Html.DropDownList("sltdp", ViewData["list"] as IEnumerable<SelectListItem>, new { id = "sltdp", @class = "form-control" })
+                            </div>*@
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <input type="text" class="form-control " id="imgname" placeholder="款式代码" onkeydown="onkdown(event);" />
+                                </div>
+                                <div class="col-xs-2">
+                                    <button onclick='btn_search();' type="button" class="btn btn-info pull-right">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                        <span>查询图片</span>
+                                    </button>
+                                </div>
+                                <div class="col-xs-2">
+                                    @*<a href='/DaPei/Arrange' class="btn btn-success pull-right">
+                                            <span>进行搭配</span>
+                                        </a>*@
+                                    <a href='/Home/Index' class="btn btn-success pull-right">
+                                        <span>返回首页</span>
+                                    </a>
+                                </div>
+
+                                @*<div class="col-xs-2">
+                                        <a href="/" class="btn btn-primary pull-right">
+                                            <span>查看报表</span>
+                                        </a>
+                                    </div>*@
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- The global progress state -->
+                    <div class="col-lg-5 fileupload-progress fade">
+                        <!-- The global progress bar -->
+                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                            <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+                        </div>
+                        <!-- The extended global progress state -->
+                        <div class="progress-extended">&nbsp;</div>
+                    </div>
+                </div>
+                <!-- The table listing the files available for upload/download -->
+                <table role="presentation" class="table table-striped"><tbody class="files" id='tbfiles'></tbody></table>
+            </form>
+        </div>
+
+
+
+        <!-- The template to display files available for upload -->
+        <script id="template-upload" type="text/x-tmpl">
+            {$ for (var i=0, file; file=o.files[i]; i++) { $}
+            <tr class="template-upload fade">
+                <td>
+                    <span class="preview"></span>
+                </td>
+                <td>
+
+                    <input name='{$=file.name$}' class='form-control' type="text" value="{$=file.name.split('.')[0]$}" />
+                    <strong class="error text-danger"></strong>
+                </td>
+                <td>
+                    <p class="size">Processing...</p>
+                    <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+                </td>
+                <td>
+                    {$ if (!i && !o.options.autoUpload) { $}
+                    <button class="btn btn-primary start" disabled>
+                        <i class="glyphicon glyphicon-upload"></i>
+                        <span>开始</span>
+                    </button>
+                    {$ } $}
+                    {$ if (!i) { $}
+                    <button class="btn btn-warning cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>取消</span>
+                    </button>
+                    {$ } $}
+                </td>
+            </tr>
+            {$ } $}
+        </script>
+        <!-- The template to display files available for download -->
+        <script id="template-download" type="text/x-tmpl">
+            {$ for (var i=0, file; file=o.files[i]; i++) { $}
+            <tr class="template-download">
+                {$ if (file.idx) { $}
+                <td>
+                    <span>{$=file.idx$}</span>
+                </td>
+                {$ } $}
+
+                <td>
+                    <span class="preview">
+                        {$ if (file.thumbnail_url) { $}
+                        <a href="{$=file.url$}?" title="{$=file.name$}" download="{$=file.name$}" data-gallery>
+                            <img class="img-circle" src="{$=file.thumbnail_url$}" style="width:60px;height:60px;">
+                        </a>
+                        {$ } $}
+                    </span>
+                </td>
+                <td>
+                    <p class="name">
+                        {$ if (file.url) { $}
+                        <a href="{$=file.url$}" title="{$=file.name$}" download="{$=file.name$}" {$=file.thumbnail_url?'data-gallery':''$}>{$=file.name$}</a>
+                        {$ } else { $}
+                        <span>{$=file.name$}</span>
+                        {$ } $}
+                    </p>
+                    {$ if (file.error) { $}
+                    <div><span class="label label-danger">Error</span> {$=file.error$}</div>
+                    {$ } $}
+                </td>
+                <td>
+                    <span class="size">{$=(file.size)$}</span>
+                </td>
+                <td>
+                    {$ if (file.delete_url) { $}
+                    <button onclick='editimg(this);' title="{$=file.name$}" type='button' class="btn btn-primary">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        <span>编辑</span>
+                    </button>
+
+                    <button class="btn btn-danger delete" data-type="{$=file.delete_type$}" data-url="{$=file.delete_url$}" {$ if (file.deletewithcredentials) { $} data-xhr-fields='{"withCredentials":true}' {$ } $}>
+                        <i class="glyphicon glyphicon-trash"></i>
+                        <span>删除</span>
+                    </button>
+                    <input type="checkbox" name="delete" value="1" class="toggle">
+                    {$ } else { $}
+                    <button class="btn btn-warning cancel">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel</span>
+                    </button>
+                    {$ } $}
+                </td>
+            </tr>
+            {$ } $}
+        </script>
+
+
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/uploadimg")
+
+    </div>
+</body>
+</html>

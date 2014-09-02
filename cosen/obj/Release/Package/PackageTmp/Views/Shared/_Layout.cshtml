@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @* <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">*@
+</head>
+
+<body>
+    <header>
+        <div class="content-wrapper">
+            @*<div class="float-left">
+                    <p class="site-title">
+                        <a href="~/">作业指导系统</a>
+                    </p>
+                </div>*@
+            <div class="float-right">
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("主页", "Index", "Home", new { area = "" }, null)</li>
+                        @if (Request.IsAuthenticated)
+                        {
+                            <li>@Context.User.Identity.Name</li>
+                            <li>@Html.ActionLink("注销", "LogOut", "Account", new { area = "" }, null)</li>
+                        }
+                        else
+                        {
+                            <li>@Html.ActionLink("登录", "LogOn", "Account", new { area = "" }, null)</li>
+                        }
+
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    @RenderBody()
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>&copy; @DateTime.Now.Year -版权所有 </p>
+            </div>
+        </div>
+    </footer>
+    @*@Scripts.Render("~/bundles/jquery")*@
+    @RenderSection("scripts", required: false)
+</body>
+</html>

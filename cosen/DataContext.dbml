@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="eissy" Class="DataContextDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=182.92.97.242;Initial Catalog=eissy;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DefaultConnection" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.dianpu" Member="dianpu">
+    <Type Name="dianpu">
+      <Column Name="Use_id" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="Use_nm" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.style" Member="style">
+    <Type Name="style">
+      <Column Name="sty_no" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="col_no" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="Com_nm" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Unt_pr" Type="System.Decimal" DbType="Decimal(18,8) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tjdp" Member="tjdp">
+    <Type Name="tjdp">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="use_id" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="cbpicture" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="tjdate" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="mqu" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="lqu1" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="lqu2" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="bqu1" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="bqu2" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="aqu1" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="aqu2" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ExceptionLog" Member="ExceptionLog">
+    <Type Name="ExceptionLog">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ErrorDate" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ExceptionType" Type="System.String" DbType="NVarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(1024) NOT NULL" CanBeNull="false" />
+      <Column Name="StackTrace" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Up4Image" Member="Up4Image">
+    <Type Name="Up4Image">
+      <Column Name="Code" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="StyleImage" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dapei" Member="dapei">
+    <Type Name="dapei">
+      <Column Name="masterstyle" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="legging1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="legging2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bottom1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bottom2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="accessory1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="accessory2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cbpicture" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.areapic" Member="areapic">
+    <Type Name="areapic">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="dpid" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="pic_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.promotions" Member="promotions">
+    <Type Name="promotions">
+      <Column Name="p_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="p_content" Type="System.String" DbType="VarChar(1000) NOT NULL" CanBeNull="false" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Style_EditionHandle" Member="Style_EditionHandle">
+    <Type Name="Style_EditionHandle">
+      <Column Name="StyleCode" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EditionHandle" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="p_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.getchdbdetail" Method="getchdbdetail" IsComposable="true">
+    <Parameter Name="startdate" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="enddate" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="cond" Type="System.String" DbType="VarChar(1000)" />
+    <Return Type="object" />
+  </Function>
+  <Function Name="dbo.getdp" Method="getdp">
+    <Parameter Name="uid" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="dt1" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="dt2" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="of" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getdpResult">
+      <Column Name="mqu" Type="System.Decimal" DbType="Decimal(38,0)" CanBeNull="true" />
+      <Column Name="masterstyle" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="mdate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lqu1" Type="System.Decimal" DbType="Decimal(38,0) NOT NULL" CanBeNull="false" />
+      <Column Name="legging1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="datel1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="lqu2" Type="System.Decimal" DbType="Decimal(38,0) NOT NULL" CanBeNull="false" />
+      <Column Name="legging2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="datel2" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bqu1" Type="System.Decimal" DbType="Decimal(38,0) NOT NULL" CanBeNull="false" />
+      <Column Name="bottom1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dateb1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="bqu2" Type="System.Decimal" DbType="Decimal(38,0) NOT NULL" CanBeNull="false" />
+      <Column Name="bottom2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dateb2" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="aqu1" Type="System.Decimal" DbType="Decimal(38,0) NOT NULL" CanBeNull="false" />
+      <Column Name="accessory1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="datea1" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="aqu2" Type="System.Decimal" DbType="Decimal(38,0) NOT NULL" CanBeNull="false" />
+      <Column Name="accessory2" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="datea2" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cbpicture" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="isdp" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.report" Method="report" IsComposable="true">
+    <Parameter Name="sltType" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="dt1" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="dt2" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="cond" Type="System.String" DbType="VarChar(1000)" />
+    <Return Type="object" />
+  </Function>
+</Database>
