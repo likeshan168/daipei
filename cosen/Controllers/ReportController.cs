@@ -40,7 +40,7 @@ namespace cosen.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "system")]//只有系统管理员才有权限进行日期的修改
-        public ContentResult UpdateDate(string styleNo, string date,int cxinfo)
+        public ContentResult UpdateDate(string styleNo, string date,int? cxinfo)
         {
             LogicModel logic = new LogicModel();
             return Content(logic.UpdateDate(styleNo, date,cxinfo));

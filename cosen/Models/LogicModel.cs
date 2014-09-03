@@ -985,7 +985,7 @@ namespace cosen.Models
         /// <param name="styleNo">款式</param>
         /// <param name="date">上市日期</param>
         /// <returns></returns>
-        public string UpdateDate(string styleNo, string date, int cxinfo)
+        public string UpdateDate(string styleNo, string date, int? cxinfo)
         {
             if (!string.IsNullOrEmpty(styleNo))
             {

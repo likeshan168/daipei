@@ -3,6 +3,25 @@
 var trMenu = $("#trMenu");
 $(document).ready(function () {
 
+    $.get('/promotion/GetPromotionJson', function (data) {
+        //console.log(data);
+        $.data(document.body, "pros", data);
+
+        var pms = [], bds = {};
+        $.each(data, function (index, value) {//p_id,p_content
+            pms.push("<li id='" + value.p_id + "'>" + value.p_content + "</li>");
+            bds[value.p_id] = function () { getSortData({ id: "cxinfo" }, value.p_id) };
+        });
+
+        $("#cxli").html(pms.join(''));
+        //getSortData({ id: 'ssdate' }, flag);
+        $('#cxinfo').contextMenu('myMenu3', {
+            bindings: bds
+        });
+
+    });
+
+
     $('#rknum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
@@ -33,12 +52,7 @@ $(document).ready(function () {
             'm_12': function () { filter('m_12'); }
         }
     });
-    $('#cxinfo').contextMenu('myMenu1', {
-        bindings: {
-            'desc': desc,
-            'asc': asc
-        }
-    });
+
     $('#chnum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
@@ -99,6 +113,7 @@ function filter(flag) {
 }
 
 function getSortData(t, sortT) {
+
     var vm = new ReportViewModel();
     vm.cosen["hdpagenum"].val("1");
     vm.options.data = {
@@ -151,10 +166,7 @@ function ReportViewModel() {
                 self.renderDp();
             });
 
-            $.get('/promotion/GetPromotionJson', function (data) {
-                //console.log(data);
-                $.data(document.body, "pros", data);
-            });
+
         } else {
             self.dianpus(html);
             self.renderDp();

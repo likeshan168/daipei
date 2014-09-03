@@ -336,7 +336,8 @@ function TjDate() {
             });
             cosen["msg"].html("正在保存...").show();
             var datetime = cosen.tjdate.val() + " " + cosen.time;
-            $.post('/api/DpApi/SaveTuiJianDp?dpid=' + cosen["dpid"] + '&tjdate=' + datetime + '&tjdp=' + dps.join("$") + "&remark=" + cosen.remark.val(), function (data) {
+            //注意这样进行的数据的传输，不能太多
+            $.post('/api/DpApi/SaveTuiJianDp', { dpid: cosen["dpid"], tjdate: datetime, tjdp: dps.join("$"), remark: cosen.remark.val() }, function (data) {
                 if (data.indexOf("成功") >= 0) {
                     //cosen["tjdate"].val();
                     self.tjdates.push({ tjdate: datetime });
