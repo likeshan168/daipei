@@ -25,15 +25,26 @@ $(document).ready(function () {
     $('#rknum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
-            'asc': asc
+            'asc': asc,
+            'num1': function (t) { number(t, 'num1') },
+            'num2': function (t) { number(t, 'num2') },
+            'num3': function (t) { number(t, 'num3') },
+            'num4': function (t) { number(t, 'num4') },
+            'num5': function (t) { number(t, 'num5') }
         }
     });
 
-    $('#nsty_no').contextMenu('myMenu1', {
+    $('#nsty_no').contextMenu('myMenu5', {
         bindings: {
             'desc': desc,
-            'asc': asc
+            'asc': asc,
+
         }
+    });
+    $('#sty_nm').contextMenu('myMenu4', {
+        //bindings: {
+        //    'search_name': desc
+        //}
     });
     $('#ssdate').contextMenu('myMenu2', {
         bindings: {
@@ -49,42 +60,83 @@ $(document).ready(function () {
             'm_09': function () { filter('m_09'); },
             'm_10': function () { filter('m_10'); },
             'm_11': function () { filter('m_11'); },
-            'm_12': function () { filter('m_12'); }
+            'm_12': function () { filter('m_12'); },
+            'all': function () { filter('all'); }
         }
     });
 
     $('#chnum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
-            'asc': asc
+            'asc': asc,
+            'num1': function (t) { number(t, 'num1') },
+            'num2': function (t) { number(t, 'num2') },
+            'num3': function (t) { number(t, 'num3') },
+            'num4': function (t) { number(t, 'num4') },
+            'num5': function (t) { number(t, 'num5') }
         }
     });
 
     $('#dbnum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
-            'asc': asc
+            'asc': asc,
+            'num1': function (t) { number(t, 'num1') },
+            'num2': function (t) { number(t, 'num2') },
+            'num3': function (t) { number(t, 'num3') },
+            'num4': function (t) { number(t, 'num4') },
+            'num5': function (t) { number(t, 'num5') }
         }
     });
 
     $('#thnum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
-            'asc': asc
+            'asc': asc,
+            'num1': function (t) { number(t, 'num1') },
+            'num2': function (t) { number(t, 'num2') },
+            'num3': function (t) { number(t, 'num3') },
+            'num4': function (t) { number(t, 'num4') },
+            'num5': function (t) { number(t, 'num5') }
         }
     });
 
     $('#xsnum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
-            'asc': asc
+            'asc': asc,
+            'num1': function (t) { number(t, 'num1') },
+            'num2': function (t) { number(t, 'num2') },
+            'num3': function (t) { number(t, 'num3') },
+            'num4': function (t) { number(t, 'num4') },
+            'num5': function (t) { number(t, 'num5') }
         }
     });
 
     $('#cknum').contextMenu('myMenu1', {
         bindings: {
             'desc': desc,
-            'asc': asc
+            'asc': asc,
+            'num1': function (t) { number(t, 'num1') },
+            'num2': function (t) { number(t, 'num2') },
+            'num3': function (t) { number(t, 'num3') },
+            'num4': function (t) { number(t, 'num4') },
+            'num5': function (t) { number(t, 'num5') }
+        }
+    });
+
+    $("#search_name").keypress(function (e) {
+        if (e.keyCode === 13) {
+
+            //$('#myMenu4').css("display", 'none');
+            //alert($(this).val());
+            getSortData({ id: 'search_name' }, $(this).val());
+        }
+    });
+
+    $("#search_value").keypress(function (e) {
+        if (e.keyCode === 13) {
+            getSortData({ id: 'search_style' }, $(this).val());
         }
     });
 });
@@ -106,8 +158,13 @@ function asc(t) {
     getSortData(t, "asc");
 }
 
+function number(t, flag) {
+    //console.log(t.id);
+    getSortData(t, flag);
+}
+
 function filter(flag) {
-    console.log(flag);
+    // console.log(flag);
     //alert(t.id);
     getSortData({ id: 'ssdate' }, flag);
 }

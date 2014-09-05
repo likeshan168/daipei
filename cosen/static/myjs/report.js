@@ -20,6 +20,8 @@ $(document).ready(function () {
         });
 
     });
+    console.log($("#topheader").css("height"));
+    $("#cosenfixed").stickyTableHeaders({ fixedOffset: 37 });
 
 
     $('#rknum').contextMenu('myMenu1', {
@@ -327,6 +329,7 @@ function ReportViewModel() {
 
     //查询按钮事件
     self.search = function () {
+
         self.cosen["hdpagenum"].val("1");
         var ckbs = self.cosen.dpcont.children('table').find('input:checkbox')
         var dps = ""
@@ -392,17 +395,6 @@ function ReportViewModel() {
         target.unbind("mouseout");
     }
 
-    //hover
-
-    //self.sortOver = function (data, event) {
-    //    console.log("hello");
-    //    var target = $(event.target);
-    //    target.append("<img src='http://cdn.staticfile.org/jquery.tablesorter/2.17.3/css/images/green-desc.gif'/>");
-    //}
-    //self.sortOut = function (data, event) {
-    //    var target = $(event.target);
-    //    target.find("img").remove();
-    //}
     self.loadData();
 };
 

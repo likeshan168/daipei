@@ -3417,6 +3417,8 @@
     <Content Include="static\myjs\jquery-1.8.3.min.js" />
     <Content Include="static\myjs\jquery.autocomplete.pack.js" />
     <Content Include="static\myjs\jquery.lazyload.js" />
+    <Content Include="static\myjs\jquery.stickytableheaders.js" />
+    <Content Include="static\myjs\jquery.stickytableheaders.min.js" />
     <Content Include="static\myjs\readme.txt" />
     <Content Include="static\myjs\report.min.js" />
     <Content Include="static\myjs\report.js" />

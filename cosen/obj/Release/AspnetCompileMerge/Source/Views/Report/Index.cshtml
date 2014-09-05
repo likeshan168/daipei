@@ -81,7 +81,7 @@
                             <th id="nsty_no" data-sort="nsty_no">
                                 款式
                             </th>
-                            <th>
+                            <th id="sty_nm" data-sort="sty_nm">
                                 名称
                             </th>
                             <th id="ssdate" data-sort="ssdate">
@@ -171,10 +171,25 @@
             <li id="desc"><img src="http://cdn.staticfile.org/jquery.tablesorter/2.17.3/css/images/green-desc.gif" /> 降序</li>
 
             <li id="asc"><img src="http://cdn.staticfile.org/jquery.tablesorter/2.17.3/css/images/green-asc.gif" /> 升序</li>
+
+            <li id="num1">5以下</li>
+            <li id="num2">5以上</li>
+            <li id="num3">10以上</li>
+            <li id="num4">15以上</li>
+            <li id="num5">20以上</li>
         </ul>
 
     </div>
+    <div class="contextMenu" id="myMenu5">
+        <ul>
+            <li id="desc"><img src="http://cdn.staticfile.org/jquery.tablesorter/2.17.3/css/images/green-desc.gif" /> 降序</li>
 
+            <li id="asc"><img src="http://cdn.staticfile.org/jquery.tablesorter/2.17.3/css/images/green-asc.gif" /> 升序</li>
+
+            <li><input id="search_value" class="form-control" /></li>
+        </ul>
+
+    </div>
     <div class="contextMenu" id="myMenu2">
         <ul>
             <li id="empty">为空</li>
@@ -190,10 +205,17 @@
             <li id="m_10">10月</li>
             <li id="m_11">11月</li>
             <li id="m_12">12月</li>
+            <li id="all">所有</li>
         </ul>
     </div>
     <div class="contextMenu" id="myMenu3">
         <ul id="cxli"></ul>
+    </div>
+
+    <div class="contextMenu" id="myMenu4">
+        <ul>
+            <li><input type="text" id="search_name" class="form-control" /></li>
+        </ul>
     </div>
     <script src="http://cdn.staticfile.org/jquery/2.1.0/jquery.min.js"></script>
     <script src="http://cdn.staticfile.org/jquery.form/3.49/jquery.form.min.js" type="text/javascript" charset="utf-8"></script>
