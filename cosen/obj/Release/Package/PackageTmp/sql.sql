@@ -1,4 +1,4 @@
-﻿--促销信息表
+﻿.sql--促销信息表
 create table promotions
 (
 	p_id int primary key  not null identity(1,1),--编号
@@ -96,15 +96,41 @@ AS
 	And Use_LB <> '6' And Fila11e.User_id='lfl' --order by Use_nm
 go
 
---库存视图
-CREATE VIEW [dbo].[kucun] AS
+--库存视图(这个是真实的库存)
+--2014-09-03 加入虚拟库存就是加入了出货申请
+--CREATE VIEW [dbo].[kucun] AS
+--	SELECT vwS003.Use_id,Use_nm,Com_nm,Sty_no,Col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
+--	convert(decimal(10,2),vws003.Sto_n1) Com_qu,Cos_pr*vws003.Sto_n1 Cos_Sum,
+--	Unt_pr*vws003.Sto_n1 Unt_Sum,Grp_id,Siz_id FROM eissy.dbo.vwS003 
+--	Where Del_bz<>'Y';
+--go
+
+
+--虚拟库存
+create view [dbo].[kucun]
+as
 	SELECT vwS003.Use_id,Use_nm,Com_nm,Sty_no,Col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
 	convert(decimal(10,2),vws003.Sto_n1) Com_qu,Cos_pr*vws003.Sto_n1 Cos_Sum,
 	Unt_pr*vws003.Sto_n1 Unt_Sum,Grp_id,Siz_id FROM eissy.dbo.vwS003 
-	Where Del_bz<>'Y';
+	Where Del_bz<>'Y'
+	union
+	SELECT use_ent,ent_nm,Com_nm,Dyan_no Sty_no,col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
+	convert(decimal(10,2),Com_qu) Com_qu,Cos_pr*Com_qu Cos_Sum,
+	Unt_pr*Com_qu Unt_Sum,Grp_id,Siz_id 
+	FROM eissy.dbo.DyantoStandSty 
+	inner join 
+	eissy.dbo.vwC403 
+	on dyantoStandSty.sty_no=vwC403.Sty_no 
+	Inner Join 
+	eissy.dbo.Fila11e 
+	On Fila11e.Use_Id=vwc403.Use_Ent  
+	Inner Join 
+	eissy.dbo.Fila11e Fila11e1 
+	On Fila11e1.Use_id=vwC403.Use_Out  
+	Where 1=1 --And Inp_dt>='2013-02-23' And Inp_dt<='2014-08-22' 
+	And Com_id Like '%' and  fila11e.User_id='zzr'  
+	And Fila11e1.user_id='zzr'  
 go
-
-
 
 
 
@@ -231,7 +257,7 @@ as
 	where REPLACE(MasterStyle,'','')=@StyleNo 
 go
 
---报表(报表就只需要看出货，不需要看出货申请)
+--报表(报表就只需要看出货，也要看出货申请)
 
 CREATE  proc [dbo].[report]
 (

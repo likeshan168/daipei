@@ -810,6 +810,20 @@ namespace cosen.Models
                     return infos.OrderBy(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
             }
+            else if (sort == "search_name")
+            {
+                if (!string.IsNullOrEmpty(styleNo))
+                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.com_nm.StartsWith(sortT, StringComparison.CurrentCultureIgnoreCase)).OrderBy(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                return infos.Where(p => p.com_nm.StartsWith(sortT, StringComparison.CurrentCultureIgnoreCase)).OrderBy(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            }
+            else if (sort == "search_style")
+            {
+
+
+                return infos.Where(p => p.nsty_no.StartsWith(sortT)).OrderBy(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+            }
+
             else if (sort == "ssdate")//上市日期不排序，只进行筛选
             {
                 if (sortT == "empty")//获取上市日期为空的
@@ -817,6 +831,12 @@ namespace cosen.Models
                     if (!string.IsNullOrEmpty(styleNo))
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo) && string.IsNullOrEmpty(p.editionhandle)).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.Where(p => string.IsNullOrEmpty(p.editionhandle)).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                }
+                else if (sortT == "all")
+                {
+                    if (!string.IsNullOrEmpty(styleNo))
+                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                    return infos.OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
                 else
                 {
@@ -884,11 +904,53 @@ namespace cosen.Models
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
-                else
+                else if (sortT == "asc")
                 {
                     if (!string.IsNullOrEmpty(styleNo))
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderBy(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                }
+                else
+                {
+
+                    switch (sortT)
+                    {
+
+                        case "num1"://<5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum < 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.rknum < 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num2"://>5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.rknum > 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num3"://>10
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 10).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.rknum > 10).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num4"://>15
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 15).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.rknum > 15).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        case "num5"://>20
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        default:
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                    }
+
+
                 }
 
             }
@@ -900,11 +962,52 @@ namespace cosen.Models
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
-                else
+                else if (sortT == "asc")
                 {
                     if (!string.IsNullOrEmpty(styleNo))
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderBy(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                }
+                else
+                {
+
+                    switch (sortT)
+                    {
+
+                        case "num1"://<5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum < 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.chnum < 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num2"://>5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.chnum > 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num3"://>10
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 10).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.chnum > 10).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num4"://>15
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 15).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.chnum > 15).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        case "num5"://>20
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        default:
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                    }
+
+
                 }
 
             }
@@ -916,11 +1019,52 @@ namespace cosen.Models
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
-                else
+                else if (sortT == "asc")
                 {
                     if (!string.IsNullOrEmpty(styleNo))
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderBy(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                }
+                else
+                {
+
+                    switch (sortT)
+                    {
+
+                        case "num1"://<5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum < 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.dbnum < 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num2"://>5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.dbnum > 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num3"://>10
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 10).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.dbnum > 10).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num4"://>15
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 15).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.dbnum > 15).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        case "num5"://>20
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        default:
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                    }
+
+
                 }
 
             }
@@ -932,11 +1076,52 @@ namespace cosen.Models
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
-                else
+                else if (sortT == "asc")
                 {
                     if (!string.IsNullOrEmpty(styleNo))
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderBy(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                }
+                else
+                {
+
+                    switch (sortT)
+                    {
+
+                        case "num1"://<5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum < 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.thnum < 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num2"://>5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.thnum > 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num3"://>10
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 10).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.thnum > 10).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num4"://>15
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 15).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.thnum > 15).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        case "num5"://>20
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        default:
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                    }
+
+
                 }
 
             }
@@ -948,13 +1133,53 @@ namespace cosen.Models
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
-                else
+                else if (sortT == "asc")
                 {
                     if (!string.IsNullOrEmpty(styleNo))
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderBy(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
+                else
+                {
 
+                    switch (sortT)
+                    {
+
+                        case "num1"://<5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum < 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.xsnum < 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num2"://>5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.xsnum > 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num3"://>10
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 10).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.xsnum > 10).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num4"://>15
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 15).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.xsnum > 15).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        case "num5"://>20
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        default:
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                    }
+
+
+                }
             }
             else if (sort == "cknum")
             {
@@ -964,11 +1189,52 @@ namespace cosen.Models
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 }
-                else
+                else if (sortT == "asc")
                 {
                     if (!string.IsNullOrEmpty(styleNo))
                         return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                     return infos.OrderBy(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                }
+                else
+                {
+
+                    switch (sortT)
+                    {
+
+                        case "num1"://<5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.cknum < 5).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.cknum < 5).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num2"://>5
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.cknum > 5).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.cknum > 5).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num3"://>10
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.cknum > 10).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.cknum > 10).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+                        case "num4"://>15
+
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.cknum > 15).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.cknum > 15).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        case "num5"://>20
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.cknum > 20).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.cknum > 20).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                        default:
+                            if (!string.IsNullOrEmpty(styleNo))
+                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                            return infos.Where(p => p.cknum > 20).OrderByDescending(p => p.cknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+                    }
+
+
                 }
 
             }
