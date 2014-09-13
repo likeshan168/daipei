@@ -1,0 +1,204 @@
+﻿<link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+
+<link href="~/Content/themes/base/all.css" rel="stylesheet" />
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h3>欢迎来到作业指导管理系统!</h3>
+            </hgroup>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <div class="row">
+            <form id="search_frm" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputzhd" class="col-sm-2 control-label">制造单编号</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="inputzhd" placeholder="制造单编号">
+                    </div>
+                    <div class="col-sm-2">
+                        <button type="submit" class="btn btn-default">查询</button>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="showMsg" style="display:none;">
+                            <p>正在查询...</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div id="draggable" class="ui-widget-header" style="z-index:1000">拖动添加模板</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+      
+
+        
+
+        <div class="row" id="table_header" style="color:blue;">
+            <div class="col-sm-1"><strong>图片</strong> </div>
+            <div class="col-sm-1"><strong>款式</strong></div>
+            <div class="col-sm-1"><strong>名称</strong></div>
+            <div class="col-sm-1"><strong>颜色</strong></div>
+            <div class="col-sm-1"><strong>105(S)</strong></div>
+            <div class="col-sm-1"><strong>120(M)</strong></div>
+            <div class="col-sm-1"><strong>130(L)</strong></div>
+            <div class="col-sm-1"><strong>140(XL)</strong></div>
+            <div class="col-sm-1"><strong>155(XXL)</strong></div>
+            <div class="col-sm-1"><strong>数量</strong></div>
+            <div class="col-sm-1"><strong>吊牌价</strong></div>
+            <div class="col-sm-1"><strong>金额</strong></div>
+        </div>
+        <div id="accd">
+
+        </div>
+        @*<div id="accordion">
+
+            </div>*@
+        @*<div class="row">
+                <div id="accordion">
+                    <h3>Section 1</h3>
+                    <div>
+                        <p>
+                            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                        </p>
+                    </div>
+
+                </div>
+            </div>*@
+    </section>
+
+</div>
+
+<div id="dialog-message" title="错误信息">
+    <span id="msg_error"></span>
+</div>
+
+<script src="~/Scripts/require.js" data-main="/static/myjs/mymain"></script>
+
+<script type="text/template" id="style_template">
+    <div class="row" data-style="<%=sty_no%><%=col_no%>" style="font-weight:bold;font-size:12px;">
+
+        <div class="col-sm-1">
+            <img src="/static/images/single/<%=sty_no%><%=col_no%>.jpg" />
+        </div>
+        <div class="col-sm-1">
+            <%=sty_no%><%=col_no%>
+        </div>
+        <div class="col-sm-1">
+            <%=com_nm%>
+        </div>
+        <div class="col-sm-1">
+            <%=col_dr%>
+        </div>
+        <div class="col-sm-1">
+            <%=s105%>
+        </div>
+        <div class="col-sm-1">
+            <%=m120%>
+        </div>
+        <div class="col-sm-1">
+            <%=l130%>
+        </div>
+        <div class="col-sm-1">
+            <%=xl140%>
+        </div>
+        <div class="col-sm-1">
+            <%=xxl155%>
+        </div>
+        <div class="col-sm-1">
+            <%=com_qu%>
+        </div>
+        <div class="col-sm-1">
+            <%=unt_pr%>
+        </div>
+        <div class="col-sm-1">
+            <%=com_pr%>
+        </div>
+    </div>
+
+    <div id="id_<%=sty_no%><%=col_no%>"></div>
+
+
+
+
+</script>
+
+<script type="text/template" id="peihuo_template">
+    <div class="col-sm-4">
+        <%=use_nm%>
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm" value="<%=s105%>" />
+    </div>
+    <div class="col-sm-1">
+
+        <input type="text" class="form-control input-sm" value="<%=m120%>" />
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm" value="<%=l130%>" />
+
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm" value="<%=xl140%>" />
+
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm" value="<%=xxl155%>" />
+
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm" readonly="readonly" value="<%=total_num%>" />
+
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm" readonly="readonly" value="<%=unt_pr%>" />
+
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm" readonly="readonly" value="<%=total_money%>" />
+    </div>
+</script>
+
+<script type="text/template" id="row_template">
+    <div class="row ui-state-default">
+        <div class="col-sm-4">
+            <select class="form-control"></select>
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm" />
+        </div>
+        <div class="col-sm-1">
+
+            <input type="text" class="form-control input-sm" />
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm" />
+
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm" />
+
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm" />
+
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm" readonly="readonly" />
+
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm" readonly="readonly" />
+
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm" readonly="readonly" />
+        </div>
+    </div>
+
+</script>

@@ -25,12 +25,12 @@ namespace cosen.Controllers
         }
 
         [HttpPost]
-        public JsonResult Search(string sltType, string dps, int pageNum, string startDate, string endDate, string styleNo,string sort,string sortT)
+        public JsonResult Search(string sltType, string dps, int pageNum, string startDate, string endDate, string styleNo, string sort, string sortT)
         {
             //return Content(dps+":"+pageNum+":"+startDate+":"+endDate);
             LogicModel logic = new LogicModel();
 
-            return Json(logic.GetReportsInfo(sltType, dps, pageNum, startDate, endDate, styleNo,sort,sortT));
+            return Json(logic.GetReportsInfo(sltType, dps, pageNum, startDate, endDate, styleNo, sort, sortT));
         }
         /// <summary>
         /// 改上市日期
@@ -40,18 +40,18 @@ namespace cosen.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "system")]//只有系统管理员才有权限进行日期的修改
-        public ContentResult UpdateDate(string styleNo, string date,int? cxinfo)
+        public ContentResult UpdateDate(string styleNo, string date, int? cxinfo)
         {
             LogicModel logic = new LogicModel();
-            return Content(logic.UpdateDate(styleNo, date,cxinfo));
+            return Content(logic.UpdateDate(styleNo, date, cxinfo));
         }
         [Authorize(Roles = "system")]//只有管理员才能有权限导出excel
         public FileResult OutExcel()
         {
-            LogicModel logic = new LogicModel();
-            byte[] fileContents = Encoding.Default.GetBytes(logic.OutExcel());
-            return File(fileContents, "application/ms-excel", "fileContents.xls");
-            //return null;
+            //LogicModel logic = new LogicModel();
+            //byte[] fileContents = Encoding.Default.GetBytes(logic.OutExcel());
+            //return File(fileContents, "application/ms-excel", "fileContents.xls");
+            return null;
 
 
         }

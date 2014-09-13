@@ -1,4 +1,6 @@
-﻿.sql--促销信息表
+﻿
+
+--促销信息表
 create table promotions
 (
 	p_id int primary key  not null identity(1,1),--编号
@@ -99,10 +101,10 @@ go
 --库存视图(这个是真实的库存)
 --2014-09-03 加入虚拟库存就是加入了出货申请
 CREATE VIEW [dbo].[kucun] AS
-	SELECT vwS003.Use_id,Use_nm,Com_nm,Sty_no,Col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
+	SELECT vwS003.Use_id,Use_nm,Com_nm,replace(Sty_no,'','') sty_no,Col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
 	convert(decimal(10,2),vws003.Sto_n1) Com_qu,Cos_pr*vws003.Sto_n1 Cos_Sum,
 	Unt_pr*vws003.Sto_n1 Unt_Sum,Grp_id,Siz_id FROM eissy.dbo.vwS003 
-	Where Del_bz<>'Y';
+	Where Del_bz<>'Y' and vws003.Sto_n1>0;
 go
 
 --虚拟库存（出货申请）
@@ -126,30 +128,30 @@ as
 	And Fila11e1.user_id='zzr'  
 go
 --虚拟库存(真实+出货申请)
---create view [dbo].[kucun]
---as
---	SELECT vwS003.Use_id,Use_nm,Com_nm,Sty_no,Col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
---	convert(decimal(10,2),vws003.Sto_n1) Com_qu,Cos_pr*vws003.Sto_n1 Cos_Sum,
---	Unt_pr*vws003.Sto_n1 Unt_Sum,Grp_id,Siz_id FROM eissy.dbo.vwS003 
---	Where Del_bz<>'Y'
---	union
---	SELECT use_ent,ent_nm,Com_nm,Dyan_no Sty_no,col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
---	convert(decimal(10,2),Com_qu) Com_qu,Cos_pr*Com_qu Cos_Sum,
---	Unt_pr*Com_qu Unt_Sum,Grp_id,Siz_id 
---	FROM eissy.dbo.DyantoStandSty 
---	inner join 
---	eissy.dbo.vwC403 
---	on dyantoStandSty.sty_no=vwC403.Sty_no 
---	Inner Join 
---	eissy.dbo.Fila11e 
---	On Fila11e.Use_Id=vwc403.Use_Ent  
---	Inner Join 
---	eissy.dbo.Fila11e Fila11e1 
---	On Fila11e1.Use_id=vwC403.Use_Out  
---	Where 1=1 --And Inp_dt>='2013-02-23' And Inp_dt<='2014-08-22' 
---	And Com_id Like '%' and  fila11e.User_id='zzr'  
---	And Fila11e1.user_id='zzr'  
---go
+create view [dbo].[totalkucun]
+as
+	SELECT vwS003.Use_id,Use_nm,Com_nm,Sty_no,Col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
+	convert(decimal(10,2),vws003.Sto_n1) Com_qu,Cos_pr*vws003.Sto_n1 Cos_Sum,
+	Unt_pr*vws003.Sto_n1 Unt_Sum,Grp_id,Siz_id FROM eissy.dbo.vwS003 
+	Where Del_bz<>'Y'
+	union
+	SELECT use_ent,ent_nm,Com_nm,Dyan_no Sty_no,col_no,Col_dr,Siz_dr,Unt_pr,Cos_pr,
+	convert(decimal(10,2),Com_qu) Com_qu,Cos_pr*Com_qu Cos_Sum,
+	Unt_pr*Com_qu Unt_Sum,Grp_id,Siz_id 
+	FROM eissy.dbo.DyantoStandSty 
+	inner join 
+	eissy.dbo.vwC403 
+	on dyantoStandSty.sty_no=vwC403.Sty_no 
+	Inner Join 
+	eissy.dbo.Fila11e 
+	On Fila11e.Use_Id=vwc403.Use_Ent  
+	Inner Join 
+	eissy.dbo.Fila11e Fila11e1 
+	On Fila11e1.Use_id=vwC403.Use_Out  
+	Where 1=1 --And Inp_dt>='2013-02-23' And Inp_dt<='2014-08-22' 
+	And Com_id Like '%' and  fila11e.User_id='zzr'  
+	And Fila11e1.user_id='zzr'  
+go
 
 
 
@@ -226,14 +228,14 @@ as
 
 	declare @tmp varchar(1000)
 	set @tmp=dbo.concatsql(@cond)
-	exec('select ent_nm,replace(sty_no,'''','''')+replace(col_no,'''','''') style,com_qu from '+
-	'chuhuo(''1'','''+@startdate+''','''+@enddate+''') where use_ent in '+@tmp+'')
+	exec('select ent_nm,replace(sty_no,'''','''')+replace(col_no,'''','''') style,com_qu,use_ent from '+
+	'chuhuo(''1'','''+@startdate+''','''+@enddate+''') where use_ent in( '+@tmp+')')
 
-	exec('select ent_nm,replace(sty_no,'''','''')+replace(col_no,'''','''') style,com_qu from '+ 
-	'diaobo(''1'','''+@startdate+''','''+@enddate+''') where use_ent in '+@tmp+'')
+	exec('select ent_nm,replace(sty_no,'''','''')+replace(col_no,'''','''') style,com_qu,use_ent from '+ 
+	'diaobo(''1'','''+@startdate+''','''+@enddate+''') where use_ent in( '+@tmp+')')
 
-	exec('select out_nm,replace(sty_no,'''','''')+replace(col_no,'''','''') style,com_qu from '+ 
-	'tuihuo(''1'','''+@startdate+''','''+@enddate+''') where use_ent in  '+@tmp+'')
+	exec('select out_nm,replace(sty_no,'''','''')+replace(col_no,'''','''') style,com_qu,use_ent from '+ 
+	'tuihuo(''1'','''+@startdate+''','''+@enddate+''') where use_out in( '+@tmp+')')
 
 	--select ent_nm,replace(sty_no,'','')+replace(col_no,'','') style,com_qu from 
 	--chuhuo('1',@startdate,@enddate,@cond) 
@@ -287,81 +289,93 @@ CREATE  proc [dbo].[report]
 )
 as
 begin
-	CREATE Table #xstmp
-	(
-		sty_no varchar(30),
-		col_no varchar(30),
-		com_qu decimal(10,2), 
-		com_pr decimal(10,2)
-	);
-	insert into  #xstmp
-	EXEC  xiaoshoup @sltType, @dt1,@dt2,@cond
+	--CREATE Table #xstmp
+	--(
+	--	sty_no varchar(30),
+	--	col_no varchar(30),
+	--	com_qu decimal(10,2), 
+	--	com_pr decimal(10,2)
+	--);
+	--insert into  #xstmp
+	--EXEC  xiaoshoup @sltType, @dt1,@dt2,@cond
 	declare @tmp varchar(1000);
 	declare @tmpsql varchar(5000)
 	set @tmp=dbo.concatsql(@cond);
 
 	if @sltType='1' --按入库日期进行查询
 		begin
-			exec('select a.nsty_no,f.com_nm,sm.editionhandle,sm.p_id,isnull(a.num,0) as rknum,
-			isnull(b.num,0) as chnum,isnull(db.num,0) as dbnum,
-			isnull(th.num,0) as thnum,
-			isnull(c.num,0) as xsnum,isnull(d.num,0) as cknum,
-			isnull(cast(f.money as decimal(10,2)),0) as unitprice,
-			isnull(cast(c.money as decimal(10,2)),0) as xsmoney
-			from(select sty_no+col_no nsty_no,sum(com_qu) as num  
-			from ruku('''+@sltType+''','''+@dt1+''','''+@dt2+''') group by sty_no+col_no) as a 
-			left join (select sty_no+col_no nsty_no , com_nm,unt_pr as money from style) as f 
-			on a.nsty_no=f.nsty_no
-			left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
-			chuhuo('''+@sltType+''','''+@dt1+''','''+@dt2+''') where use_ent in('+@tmp+')  
-			group by sty_no+col_no) as b on a.nsty_no= b.nsty_no 
-			left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
-			diaobo('''+@sltType+''','''+@dt1+''','''+@dt2+''') where use_ent in('+@tmp+') 
-			group by sty_no+col_no) as db on a.nsty_no= db.nsty_no  
-			left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
-			tuihuo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_out in('+@tmp+')
-			group by sty_no+col_no) as th on a.nsty_no= th.nsty_no 
-			left join(select nsty_no,com_qu as num,
-			com_qu*com_pr as money from (SELECT sty_no+col_no nsty_no,
-			Sum(com_qu) com_qu,Sum(com_pr) com_pr From #xstmp 
-			Group By sty_no+col_no  ) tp) as c on replace(c.nsty_no,'''','''')=a.nsty_no
-			left join(select sty_no+col_no nstyl_no,sum(com_qu) as num from kucun where use_id in ('+@tmp+')
-			group by sty_no+col_no) as d on replace(d.nstyl_no,'''','''')=a.nsty_no
-			left join style_editionhandle as sm on a.nsty_no=sm.stylecode')
+			--exec('select a.nsty_no,f.com_nm,sm.editionhandle,sm.p_id,isnull(a.num,0) as rknum,
+			--isnull(b.num,0) as chnum,isnull(db.num,0) as dbnum,
+			--isnull(th.num,0) as thnum,
+			--isnull(c.num,0) as xsnum,isnull(d.num,0) as cknum,
+			--isnull(cast(f.money as decimal(10,2)),0) as unitprice,
+			--isnull(cast(c.money as decimal(10,2)),0) as xsmoney
+			--from(select sty_no+col_no nsty_no,sum(com_qu) as num  
+			--from ruku('''+@sltType+''','''+@dt1+''','''+@dt2+''') group by sty_no+col_no) as a 
+			--left join (select sty_no+col_no nsty_no , com_nm,unt_pr as money from style) as f 
+			--on a.nsty_no=f.nsty_no
+			--left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
+			--chuhuo('''+@sltType+''','''+@dt1+''','''+@dt2+''') where use_ent in('+@tmp+')  
+			--group by sty_no+col_no) as b on a.nsty_no= b.nsty_no 
+			--left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
+			--diaobo('''+@sltType+''','''+@dt1+''','''+@dt2+''') where use_ent in('+@tmp+') 
+			--group by sty_no+col_no) as db on a.nsty_no= db.nsty_no  
+			--left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
+			--tuihuo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_out in('+@tmp+')
+			--group by sty_no+col_no) as th on a.nsty_no= th.nsty_no 
+			--left join(select nsty_no,com_qu as num,
+			--com_qu*com_pr as money from (SELECT sty_no+col_no nsty_no,
+			--Sum(com_qu) com_qu,Sum(com_pr) com_pr From #xstmp 
+			--Group By sty_no+col_no  ) tp) as c on replace(c.nsty_no,'''','''')=a.nsty_no
+			--left join(select sty_no+col_no nstyl_no,sum(com_qu) as num from kucun where use_id in ('+@tmp+')
+			--group by sty_no+col_no) as d on replace(d.nstyl_no,'''','''')=a.nsty_no
+			--left join style_editionhandle as sm on a.nsty_no=sm.stylecode')
+			
+			exec('select d.nsty_no,d.com_nm,sm.editionhandle,sm.p_id,
+			isnull(d.num,0) as cknum
+			from (select sty_no+col_no nsty_no,Com_nm,sum(com_qu) as num 
+			from kucun where use_id in ('+@tmp+')
+			group by sty_no+col_no,Com_nm) as d 
+			left join style_editionhandle as sm on d.nsty_no=sm.stylecode order by d.nsty_no')
 			
 		end
 	else--按上市日期进行查询
 		begin
-			exec('select a.nsty_no,f.com_nm,sm.editionhandle,sm.p_id,isnull(a.num,0) as rknum,
-			isnull(b.num,0) as chnum,isnull(db.num,0) as dbnum,
-			isnull(th.num,0) as thnum,
-			isnull(c.num,0) as xsnum,isnull(d.num,0) as cknum,
-			isnull(cast(f.money as decimal(10,2)),0) as unitprice,
-			isnull(cast(c.money as decimal(10,2)),0) as xsmoney
-			from(select sty_no+col_no nsty_no,sum(com_qu) as num  
-			from ruku('''+@sltType+''','''+@dt1+''','''+@dt2+''') group by sty_no+col_no) as a 
-			left join (select sty_no+col_no nsty_no , com_nm,unt_pr as money from style) as f 
-			on a.nsty_no=f.nsty_no
-			left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
-			chuhuo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_ent in('+@tmp+')
-			group by sty_no+col_no) as b on a.nsty_no= b.nsty_no 
-			left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
-			diaobo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_ent in('+@tmp+')
-			group by sty_no+col_no) as db on a.nsty_no= db.nsty_no  
-			left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
-			tuihuo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_out in('+@tmp+')
-			group by sty_no+col_no) as th on a.nsty_no= th.nsty_no 
-			left join(select nsty_no,com_qu as num,
-			com_qu*com_pr as money from (SELECT sty_no+col_no nsty_no,
-			Sum(com_qu) com_qu,Sum(com_pr) com_pr From #xstmp 
-			Group By sty_no+col_no  ) tp) as c on replace(c.nsty_no,'''','''')=a.nsty_no
-			left join(select sty_no+col_no nstyl_no,sum(com_qu) as num from kucun where use_id in ('+@tmp+')
-			group by sty_no+col_no) as d on replace(d.nstyl_no,'''','''')=a.nsty_no
-			right join style_editionhandle as sm on a.nsty_no=sm.stylecode  where sm.EditionHandle>='''+@dt1+''' and sm.EditionHandle<='''+@dt2+''' ')
-			
+			--exec('select a.nsty_no,f.com_nm,sm.editionhandle,sm.p_id,isnull(a.num,0) as rknum,
+			--isnull(b.num,0) as chnum,isnull(db.num,0) as dbnum,
+			--isnull(th.num,0) as thnum,
+			--isnull(c.num,0) as xsnum,isnull(d.num,0) as cknum,
+			--isnull(cast(f.money as decimal(10,2)),0) as unitprice,
+			--isnull(cast(c.money as decimal(10,2)),0) as xsmoney
+			--from(select sty_no+col_no nsty_no,sum(com_qu) as num  
+			--from ruku('''+@sltType+''','''+@dt1+''','''+@dt2+''') group by sty_no+col_no) as a 
+			--left join (select sty_no+col_no nsty_no , com_nm,unt_pr as money from style) as f 
+			--on a.nsty_no=f.nsty_no
+			--left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
+			--chuhuo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_ent in('+@tmp+')
+			--group by sty_no+col_no) as b on a.nsty_no= b.nsty_no 
+			--left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
+			--diaobo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_ent in('+@tmp+')
+			--group by sty_no+col_no) as db on a.nsty_no= db.nsty_no  
+			--left join(select sty_no+col_no nsty_no, sum(com_qu) as num from 
+			--tuihuo('''+@sltType+''','''+@dt1+''','''+@dt2+''')  where use_out in('+@tmp+')
+			--group by sty_no+col_no) as th on a.nsty_no= th.nsty_no 
+			--left join(select nsty_no,com_qu as num,
+			--com_qu*com_pr as money from (SELECT sty_no+col_no nsty_no,
+			--Sum(com_qu) com_qu,Sum(com_pr) com_pr From #xstmp 
+			--Group By sty_no+col_no  ) tp) as c on replace(c.nsty_no,'''','''')=a.nsty_no
+			--left join(select sty_no+col_no nstyl_no,sum(com_qu) as num from kucun where use_id in ('+@tmp+')
+			--group by sty_no+col_no) as d on replace(d.nstyl_no,'''','''')=a.nsty_no
+			--right join style_editionhandle as sm on a.nsty_no=sm.stylecode  where sm.EditionHandle>='''+@dt1+''' and sm.EditionHandle<='''+@dt2+''' ')
+			exec('select d.nsty_no,d.com_nm,sm.editionhandle,sm.p_id,
+			isnull(d.num,0) as cknum
+			from (select sty_no+col_no nsty_no,Com_nm,sum(com_qu) as num 
+			from kucun where use_id in ('+@tmp+')
+			group by sty_no+col_no,Com_nm) as d 
+			left join style_editionhandle as sm on d.nsty_no=sm.stylecode where sm.EditionHandle>='''+@dt1+''' and sm.EditionHandle<='''+@dt2+''' order by d.nsty_no')
 		end
 	exec(@tmpsql)
-	drop table #xstmp
+	--drop table #xstmp
 end
 go
 --销售存储过程
@@ -681,7 +695,7 @@ from(
 		select kc.styleno,kc.com_qu+isnull(ch.com_qu,0) as com_qu,sm.EditionHandle from 
 		(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
 			sum(cast(com_qu as decimal(10,0))) com_qu 
-			from kucun where use_id=@uid  and com_qu>0 
+			from totalkucun where use_id=@uid  and com_qu>0 
 			group by replace(sty_no,'','')+replace(col_no,'','')) kc
 		left join--加入出货（计算未来库存）
 		(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
@@ -701,7 +715,7 @@ left join
 select kc.styleno,kc.com_qu+isnull(ch.com_qu,0) as com_qu,sm.EditionHandle datel1 from 
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
 		sum(cast(com_qu as decimal(10,0))) com_qu 
-		from kucun where use_id=@uid  and com_qu>0 
+		from totalkucun where use_id=@uid  and com_qu>0 
 		group by replace(sty_no,'','')+replace(col_no,'','')) kc
 	left join
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
@@ -719,7 +733,7 @@ left join
 select kc.styleno,kc.com_qu+isnull(ch.com_qu,0) as com_qu,sm.EditionHandle datel2 from 
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
 		sum(cast(com_qu as decimal(10,0))) com_qu 
-		from kucun where use_id=@uid  and com_qu>0 
+		from totalkucun where use_id=@uid  and com_qu>0 
 		group by replace(sty_no,'','')+replace(col_no,'','')) kc
 	left join
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
@@ -737,7 +751,7 @@ left join
 select kc.styleno,kc.com_qu+isnull(ch.com_qu,0) as com_qu,sm.EditionHandle dateb1 from 
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
 		sum(cast(com_qu as decimal(10,0))) com_qu 
-		from kucun where use_id=@uid  and com_qu>0 
+		from totalkucun where use_id=@uid  and com_qu>0 
 		group by replace(sty_no,'','')+replace(col_no,'','')) kc
 	left join
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
@@ -756,7 +770,7 @@ left join
 select kc.styleno,kc.com_qu+isnull(ch.com_qu,0) as com_qu,sm.EditionHandle dateb2 from 
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
 		sum(cast(com_qu as decimal(10,0))) com_qu 
-		from kucun where use_id=@uid  and com_qu>0 
+		from totalkucun where use_id=@uid  and com_qu>0 
 		group by replace(sty_no,'','')+replace(col_no,'','')) kc
 	left join
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
@@ -774,7 +788,7 @@ left join
 	select kc.styleno,kc.com_qu+isnull(ch.com_qu,0) as com_qu,sm.EditionHandle datea1 from 
 	(	 select replace(sty_no,'','')+replace(col_no,'','') styleno,
 		 sum(cast(com_qu as decimal(10,0))) com_qu 
-		 from kucun where use_id=@uid  and com_qu>0 
+		 from totalkucun where use_id=@uid  and com_qu>0 
 		 group by replace(sty_no,'','')+replace(col_no,'','')) kc
 	 left join
 	(	 select replace(sty_no,'','')+replace(col_no,'','') styleno,
@@ -792,7 +806,7 @@ left join
 select kc.styleno,kc.com_qu+isnull(ch.com_qu,0) as com_qu,sm.EditionHandle datea2 from 
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
 		sum(cast(com_qu as decimal(10,0))) com_qu 
-		from kucun where use_id=@uid  and com_qu>0 
+		from totalkucun where use_id=@uid  and com_qu>0 
 		group by replace(sty_no,'','')+replace(col_no,'','')) kc
 	left join
 	(	select replace(sty_no,'','')+replace(col_no,'','') styleno,
@@ -1106,3 +1120,56 @@ as
 	(StyleCode,EditionHandle) values(@code,@editionhandle)
 
 go
+
+
+--根据制单号获取制造单信息
+create proc zhizhaodan_proc
+	@dh varchar(100)
+as
+	select cast(com_qu as decimal(10,2)) com_qu,
+	replace(com_id,'','') com_id,col_no, 
+	com_nm,dyan_no sty_no,col_dr,siz_no, siz_dr,cast( com_pr as decimal(10,2)) com_pr, 
+	siz_id,cast( unt_pr as decimal(10,2)) unt_pr from eissy.dbo.vwk201 vwk201,
+	eissy.dbo.dyantostandsty  
+	dyantostandsty where  dh=@dh and
+	dyantostandsty.sty_no=vwk201.sty_no  
+	order by man_dt,fin_dt,com_id 
+go
+--根据生产单进行配货
+create table PeiHuo
+(
+	zhid varchar(50) primary key,--制造单号
+	use_id varchar(20)  not null,--店铺id
+	style varchar(50) not null,--款式+颜色 
+	s105 int ,--S:尺码数量
+	m120 int ,--M:尺码数量
+	l130 int ,--L:尺码数量
+	xl140 int ,--XL:尺码数量
+	xxl155 int,--XXL:尺码数量
+	total_num int,--总数
+	unt_pr decimal,--吊牌价
+	total_money decimal,--总金额
+	ph_date varchar(30),--配货日期
+	ph_update_date varchar(30),--配货更新时间
+	ph_per varchar(30),--配货人
+	ph_update_per varchar(30),--配货修改人
+	remark varchar(1000)--备注
+)
+go
+--获取某一款在各个店铺的配货情况
+CREATE proc GetPeiHuo_Proc
+	@style varchar(30),
+	@zhid varchar(30)
+as
+	select d.use_id,d.use_nm,isnull(p.style,@style) style,p.s105,p.m120,p.l130,p.xl140,
+	p.xxl155,p.total_num,p.unt_pr,p.total_money
+	from dianpu d
+	left join 
+	(
+		select use_id,style,s105,m120,l130,xl140,xxl155,
+		total_num,unt_pr,total_money
+		from PeiHuo where zhid=@zhid and style=@style
+	) p 
+	on d.Use_id=p.use_id where d.Use_id 
+	not in('G001','G002','g003','G004','Z000','Z009')
+	order by d.Use_nm

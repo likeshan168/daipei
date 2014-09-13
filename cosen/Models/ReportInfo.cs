@@ -38,30 +38,30 @@ namespace cosen.Models
         /// <summary>
         /// 入库数
         /// </summary>
-        [global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
-        public float rknum { get; set; }
+        //[global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
+        //public float rknum { get; set; }
         /// <summary>
         /// 出货数（出货指的是给加盟商的发货）
         /// </summary>
-        [global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
-        public float chnum { get; set; }
+        //[global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
+        //public float chnum { get; set; }
 
         /// <summary>
         /// 调拨数（调拨指的是：给直营店的发货）
         /// </summary>
-        [global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
-        public float dbnum { get; set; }
+        //[global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
+        //public float dbnum { get; set; }
 
         /// <summary>
         /// 退货数
         /// </summary>
-        [global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
-        public float thnum { get; set; }
+        //[global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
+        //public float thnum { get; set; }
         /// <summary>
         /// 销售数
         /// </summary>
-        [global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
-        public float xsnum { get; set; }
+        //[global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
+        //public float xsnum { get; set; }
         /// <summary>
         /// 库存数
         /// </summary>
@@ -71,13 +71,13 @@ namespace cosen.Models
         /// <summary>
         /// 单价
         /// </summary>
-        [global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
-        public float unitprice { get; set; }
+        //[global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
+        //public float unitprice { get; set; }
         /// <summary>
         /// 销售总金额
         /// </summary>
-        [global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
-        public float xsmoney { get; set; }
+        //[global::System.Data.Linq.Mapping.ColumnAttribute(DbType = "Decimal(38,0) NOT NULL")]
+        //public float xsmoney { get; set; }
 
     }
 }

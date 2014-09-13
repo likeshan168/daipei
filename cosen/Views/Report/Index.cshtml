@@ -21,31 +21,58 @@
                 <form class="form-inline" id="cosenFrm" role="form" action='/report/search' method='post'>
                     @Html.AntiForgeryToken()
 
-                    <div class="form-group">
+
+                    @*查询所有*@
+                    @*<div class="form-group">
+
+                            <select class="form-control input-sm" id="sltcond" data-bind="event:{change:changeSlt}">
+                                <option value="1">入库日期</option>
+                                <option value="2">上市日期</option>
+                            </select>
+                        </div>
+                        <div class="form-group" data-bind="visible:!changeCond()">
+                            <label class="sr-only" for="startdate">startdate</label>
+                            <input type="date" class="form-control input-sm" id="startdate" value="@ViewData["startDate"].ToString()" placeholder="Enter startdate">
+                        </div>
+                        <div class="form-group" data-bind="visible:!changeCond()">
+                            <label class="sr-only" for="enddate">enddate</label>
+                            <input type="date" class="form-control input-sm" id="enddate" placeholder="Enter enddate" value="@ViewData["endDate"].ToString()">
+                        </div>
+
+                        <div class="form-group" data-bind="visible:changeCond" >
+                            <label class="sr-only" for="startdate">startdate</label>
+                            <input type="number" class="form-control input-sm" id="startmonth" value="@ViewData["startMonth"].ToString()" placeholder="Enter startdate">
+                        </div>
+                        <div class="form-group" data-bind="visible:changeCond">
+                            <label class="sr-only" for="enddate">enddate</label>
+                            <input type="number" class="form-control input-sm" id="endmonth" placeholder="Enter enddate" value="@ViewData["endMonth"].ToString()">
+                        </div>*@
+
+                    @*查询库存*@
+                    <div class="form-group" style="display:none">
 
                         <select class="form-control input-sm" id="sltcond" data-bind="event:{change:changeSlt}">
                             <option value="1">入库日期</option>
                             <option value="2">上市日期</option>
                         </select>
                     </div>
-                    <div class="form-group" data-bind="visible:!changeCond()">
+                    <div class="form-group" style="display:none">
                         <label class="sr-only" for="startdate">startdate</label>
                         <input type="date" class="form-control input-sm" id="startdate" value="@ViewData["startDate"].ToString()" placeholder="Enter startdate">
                     </div>
-                    <div class="form-group" data-bind="visible:!changeCond()">
+                    <div class="form-group" style="display:none">
                         <label class="sr-only" for="enddate">enddate</label>
                         <input type="date" class="form-control input-sm" id="enddate" placeholder="Enter enddate" value="@ViewData["endDate"].ToString()">
                     </div>
 
-                    <div class="form-group" data-bind="visible:changeCond">
+                    <div class="form-group" style="display:none">
                         <label class="sr-only" for="startdate">startdate</label>
                         <input type="number" class="form-control input-sm" id="startmonth" value="@ViewData["startMonth"].ToString()" placeholder="Enter startdate">
                     </div>
-                    <div class="form-group" data-bind="visible:changeCond">
+                    <div class="form-group" style="display:none">
                         <label class="sr-only" for="enddate">enddate</label>
                         <input type="number" class="form-control input-sm" id="endmonth" placeholder="Enter enddate" value="@ViewData["endMonth"].ToString()">
                     </div>
-
 
                     <div class="form-group">
                         <label class="sr-only" for="styleno">styleno</label>
@@ -57,9 +84,9 @@
                     </button>
                     &nbsp;
 
-                    <button id="btnExcel" type="button" class="btn btn-info" data-bind="click:outexcel">
-                        导出Excel
-                    </button>
+                    @*<button id="btnExcel" type="button" class="btn btn-info" data-bind="click:outexcel">
+                            导出Excel
+                        </button>*@
 
                     @*<a href="/DaPei/UploadImg" class="btn btn-primary active" role="button">上传图片</a>*@
                     <a href="/home/index" class="btn btn-primary active" role="button">返回首页</a>
@@ -93,37 +120,45 @@
                             <th>
                                 图片
                             </th>
-                            <th id="rknum" data-sort="rknum">
-                                入库
-                            </th>
-                            <th id="chnum" data-sort="chnum">
-                                出货
-                            </th>
-                            <th id="dbnum" data-sort="dbnum">
-                                调拨
-                            </th>
-                            <th id="thnum" data-sort="thnum">
-                                退货
-                            </th>
-                            <th id="xsnum" data-sort="xsnum">
-                                销售
-                            </th>
+                            @*<th id="rknum" data-sort="rknum">
+                                    入库
+                                </th>
+                                <th id="chnum" data-sort="chnum">
+                                    出货
+                                </th>
+                                <th id="dbnum" data-sort="dbnum">
+                                    调拨
+                                </th>
+                                <th id="thnum" data-sort="thnum">
+                                    退货
+                                </th>
+                                <th id="xsnum" data-sort="xsnum">
+                                    销售
+                                </th>*@
                             <th id="cknum" data-sort="cknum">
                                 库存
                             </th>
 
-                            <th>
-                                单价
-                            </th>
-                            <th>
-                                金额
-                            </th>
+                            @*<th>
+                                    单价
+                                </th>
+                                <th>
+                                    金额
+                                </th>*@
                             <th>
                                 操作
                             </th>
                         </tr>
                     </thead>
                     <tbody id="report"></tbody>
+                    <tfoot id="tfoot" style="display:none;">
+                        <tr>
+                            <td colspan="8" class="text-center">
+                                <a data-bind="click:loadMore" href="javascript:void(0);">加载更多...</a>
+
+                            </td>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>

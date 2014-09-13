@@ -81,12 +81,6 @@
       <Column Name="Remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
     </Type>
   </Table>
-  <Function Name="dbo.getchdbdetail" Method="getchdbdetail" IsComposable="true">
-    <Parameter Name="startdate" Type="System.String" DbType="VarChar(30)" />
-    <Parameter Name="enddate" Type="System.String" DbType="VarChar(30)" />
-    <Parameter Name="cond" Type="System.String" DbType="VarChar(1000)" />
-    <Return Type="object" />
-  </Function>
   <Function Name="dbo.getdp" Method="getdp">
     <Parameter Name="uid" Type="System.String" DbType="VarChar(30)" />
     <Parameter Name="dt1" Type="System.String" DbType="VarChar(30)" />
@@ -124,5 +118,43 @@
     <Parameter Name="dt2" Type="System.String" DbType="VarChar(20)" />
     <Parameter Name="cond" Type="System.String" DbType="VarChar(1000)" />
     <Return Type="object" />
+  </Function>
+  <Function Name="dbo.getchdbdetail" Method="getchdbdetail" IsComposable="true">
+    <Parameter Name="startdate" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="enddate" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="cond" Type="System.String" DbType="VarChar(1000)" />
+    <Return Type="object" />
+  </Function>
+  <Function Name="dbo.zhizhaodan_proc" Method="zhizhaodan_proc">
+    <Parameter Name="dh" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="zhizhaodan_procResult">
+      <Column Name="com_qu" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="com_id" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="col_no" Type="System.String" DbType="VarChar(8) NOT NULL" CanBeNull="false" />
+      <Column Name="com_nm" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="sty_no" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="col_dr" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="siz_no" Type="System.String" DbType="VarChar(2) NOT NULL" CanBeNull="false" />
+      <Column Name="siz_dr" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="siz_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unt_pr" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetPeiHuo_Proc" Method="GetPeiHuo_Proc">
+    <Parameter Name="style" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="zhid" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="GetPeiHuo_ProcResult">
+      <Column Name="use_id" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="use_nm" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="style" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="s105" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="m120" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="l130" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="xl140" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="xxl155" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="total_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unt_pr" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="total_money" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </ElementType>
   </Function>
 </Database>

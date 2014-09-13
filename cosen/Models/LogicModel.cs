@@ -896,291 +896,293 @@ namespace cosen.Models
                     return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.p_id == int.Parse(sortT)).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
                 return infos.Where(p => p.p_id == int.Parse(sortT)).OrderByDescending(p => p.nsty_no).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
             }
-            else if (sort == "rknum")//入库排序
-            {
-                if (sortT == "desc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else if (sortT == "asc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderBy(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else
-                {
+            #region 查询所有的时候
+            //else if (sort == "rknum")//入库排序
+            //{
+            //    if (sortT == "desc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else if (sortT == "asc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderBy(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else
+            //    {
 
-                    switch (sortT)
-                    {
+            //        switch (sortT)
+            //        {
 
-                        case "num1"://<5
+            //            case "num1"://<5
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum < 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.rknum < 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum < 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.rknum < 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num2"://>5
+            //            case "num2"://>5
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.rknum > 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.rknum > 5).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num3"://>10
+            //            case "num3"://>10
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 10).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.rknum > 10).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 10).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.rknum > 10).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num4"://>15
+            //            case "num4"://>15
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 15).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.rknum > 15).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        case "num5"://>20
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        default:
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 15).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.rknum > 15).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            case "num5"://>20
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            default:
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.rknum > 20).OrderByDescending(p => p.rknum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                    }
-
-
-                }
-
-            }
-            else if (sort == "chnum")
-            {
-                if (sortT == "desc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else if (sortT == "asc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderBy(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else
-                {
-
-                    switch (sortT)
-                    {
-
-                        case "num1"://<5
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum < 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.chnum < 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-
-                        case "num2"://>5
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.chnum > 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-
-                        case "num3"://>10
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 10).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.chnum > 10).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-
-                        case "num4"://>15
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 15).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.chnum > 15).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        case "num5"://>20
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        default:
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    }
+            //        }
 
 
-                }
+            //    }
 
-            }
-            else if (sort == "dbnum")
-            {
-                if (sortT == "desc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else if (sortT == "asc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderBy(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else
-                {
+            //}
+            //else if (sort == "chnum")
+            //{
+            //    if (sortT == "desc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else if (sortT == "asc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderBy(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else
+            //    {
 
-                    switch (sortT)
-                    {
+            //        switch (sortT)
+            //        {
 
-                        case "num1"://<5
+            //            case "num1"://<5
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum < 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.dbnum < 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum < 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.chnum < 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num2"://>5
+            //            case "num2"://>5
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.dbnum > 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.chnum > 5).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num3"://>10
+            //            case "num3"://>10
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 10).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.dbnum > 10).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 10).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.chnum > 10).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num4"://>15
+            //            case "num4"://>15
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 15).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.dbnum > 15).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        case "num5"://>20
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        default:
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    }
-
-
-                }
-
-            }
-            else if (sort == "thnum")
-            {
-                if (sortT == "desc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else if (sortT == "asc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderBy(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else
-                {
-
-                    switch (sortT)
-                    {
-
-                        case "num1"://<5
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum < 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.thnum < 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-
-                        case "num2"://>5
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.thnum > 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-
-                        case "num3"://>10
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 10).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.thnum > 10).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-
-                        case "num4"://>15
-
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 15).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.thnum > 15).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        case "num5"://>20
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        default:
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    }
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 15).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.chnum > 15).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            case "num5"://>20
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            default:
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.chnum > 20).OrderByDescending(p => p.chnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        }
 
 
-                }
+            //    }
 
-            }
-            else if (sort == "xsnum")
-            {
-                if (sortT == "desc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else if (sortT == "asc")
-                {
-                    if (!string.IsNullOrEmpty(styleNo))
-                        return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    return infos.OrderBy(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                }
-                else
-                {
+            //}
+            //else if (sort == "dbnum")
+            //{
+            //    if (sortT == "desc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else if (sortT == "asc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderBy(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else
+            //    {
 
-                    switch (sortT)
-                    {
+            //        switch (sortT)
+            //        {
 
-                        case "num1"://<5
+            //            case "num1"://<5
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum < 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.xsnum < 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum < 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.dbnum < 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num2"://>5
+            //            case "num2"://>5
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.xsnum > 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.dbnum > 5).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num3"://>10
+            //            case "num3"://>10
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 10).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.xsnum > 10).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 10).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.dbnum > 10).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
 
-                        case "num4"://>15
+            //            case "num4"://>15
 
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 15).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.xsnum > 15).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        case "num5"://>20
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                        default:
-                            if (!string.IsNullOrEmpty(styleNo))
-                                return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                            return infos.Where(p => p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
-                    }
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 15).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.dbnum > 15).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            case "num5"://>20
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            default:
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.dbnum > 20).OrderByDescending(p => p.dbnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        }
 
 
-                }
-            }
+            //    }
+
+            //}
+            //else if (sort == "thnum")
+            //{
+            //    if (sortT == "desc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else if (sortT == "asc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderBy(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else
+            //    {
+
+            //        switch (sortT)
+            //        {
+
+            //            case "num1"://<5
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum < 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.thnum < 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+            //            case "num2"://>5
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.thnum > 5).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+            //            case "num3"://>10
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 10).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.thnum > 10).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+            //            case "num4"://>15
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 15).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.thnum > 15).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            case "num5"://>20
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            default:
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.thnum > 20).OrderByDescending(p => p.thnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        }
+
+
+            //    }
+
+            //}
+            //else if (sort == "xsnum")
+            //{
+            //    if (sortT == "desc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else if (sortT == "asc")
+            //    {
+            //        if (!string.IsNullOrEmpty(styleNo))
+            //            return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderBy(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        return infos.OrderBy(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //    }
+            //    else
+            //    {
+
+            //        switch (sortT)
+            //        {
+
+            //            case "num1"://<5
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum < 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.xsnum < 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+            //            case "num2"://>5
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.xsnum > 5).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+            //            case "num3"://>10
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 10).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.xsnum > 10).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+
+            //            case "num4"://>15
+
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 15).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.xsnum > 15).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            case "num5"://>20
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo) && p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //            default:
+            //                if (!string.IsNullOrEmpty(styleNo))
+            //                    return infos.Where(p => p.nsty_no.StartsWith(styleNo)).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //                return infos.Where(p => p.xsnum > 20).OrderByDescending(p => p.xsnum).Skip((pageNum - 1) * 10).Take(10).ToList<ReportInfo>();
+            //        }
+
+
+            //    }
+            //} 
+            #endregion
             else if (sort == "cknum")
             {
                 if (sortT == "desc")
@@ -1291,170 +1293,171 @@ namespace cosen.Models
         /// 导出excel
         /// </summary>
         /// <returns></returns>
-        public string OutExcel()
-        {
-            #region
-            //var sbHtml = new StringBuilder();
-            //sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
-            //sbHtml.Append("<tr>");
-            //var lstTitle = new List<string> { "编号", "姓名", "年龄", "创建时间", "图片" };
-            //foreach (var item in lstTitle)
-            //{
-            //    sbHtml.AppendFormat("<td style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='25'>{0}</td>", item);
-            //}
-            //sbHtml.Append("</tr>");
+        //public string OutExcel()
+        //{
+        //    #region
+        //    //var sbHtml = new StringBuilder();
+        //    //sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
+        //    //sbHtml.Append("<tr>");
+        //    //var lstTitle = new List<string> { "编号", "姓名", "年龄", "创建时间", "图片" };
+        //    //foreach (var item in lstTitle)
+        //    //{
+        //    //    sbHtml.AppendFormat("<td style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='25'>{0}</td>", item);
+        //    //}
+        //    //sbHtml.Append("</tr>");
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    sbHtml.Append("<tr>");
-            //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", i);
-            //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>屌丝{0}号</td>", i);
-            //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", new Random().Next(20, 30) + i);
-            //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", DateTime.Now);
-            //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'><img src='http://www.cosen168.com:83/static/images/single/23067CO1-CF1J2-1.jpg' /></td>");
-            //    sbHtml.Append("</tr>");
-            //}
-            //sbHtml.Append("</table>");
-            //return sbHtml.ToString(); 
-            #endregion
+        //    //for (int i = 0; i < 10; i++)
+        //    //{
+        //    //    sbHtml.Append("<tr>");
+        //    //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", i);
+        //    //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>屌丝{0}号</td>", i);
+        //    //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", new Random().Next(20, 30) + i);
+        //    //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'>{0}</td>", DateTime.Now);
+        //    //    sbHtml.AppendFormat("<td style='font-size: 12px;height:20px;'><img src='http://www.cosen168.com:83/static/images/single/23067CO1-CF1J2-1.jpg' /></td>");
+        //    //    sbHtml.Append("</tr>");
+        //    //}
+        //    //sbHtml.Append("</table>");
+        //    //return sbHtml.ToString(); 
+        //    #endregion
 
-            string startDate = (string)HttpContext.Current.Cache["startDate"];
-            string endDate = (string)HttpContext.Current.Cache["endDate"];
+        //    string startDate = (string)HttpContext.Current.Cache["startDate"];
+        //    string endDate = (string)HttpContext.Current.Cache["endDate"];
 
-            string dpidStr = (string)HttpContext.Current.Cache["dpids"];
-            string[] dpids = dpidStr.Split('$');
+        //    string dpidStr = (string)HttpContext.Current.Cache["dpids"];
+        //    string[] dpids = dpidStr.Split('$');
 
-            IList<dianpu> dps = (List<dianpu>)HttpContext.Current.Cache["dps"];
-            IList<ChuHuoDetails> chdetails = null;
-            IList<DiaoBoDetails> dbdetails = null;
-            IList<TuiHuoDetails> thdetails = null;
-            using (dataContext = new DataContextDataContext())
-            {
-                IMultipleResults result = dataContext.getchdbdetail2(startDate, endDate, dpidStr.Replace('$', ','));
-                chdetails = result.GetResult<ChuHuoDetails>().ToList();
-                dbdetails = result.GetResult<DiaoBoDetails>().ToList();
-                thdetails = result.GetResult<TuiHuoDetails>().ToList();
-            }
+        //    IList<dianpu> dps = (List<dianpu>)HttpContext.Current.Cache["dps"];
+        //    IList<ChuHuoDetails> chdetails = null;
+        //    IList<DiaoBoDetails> dbdetails = null;
+        //    IList<TuiHuoDetails> thdetails = null;
+        //    using (dataContext = new DataContextDataContext())
+        //    {
+        //        IMultipleResults result = dataContext.getchdbdetail2(startDate, endDate, dpidStr.Replace('$', ','));
+        //        chdetails = result.GetResult<ChuHuoDetails>().ToList();
+        //        dbdetails = result.GetResult<DiaoBoDetails>().ToList();
+        //        thdetails = result.GetResult<TuiHuoDetails>().ToList();
+        //    }
 
-            var daili = dps.Where(p => (p.Use_id.StartsWith("D") && p.Use_id != "D006") || p.Use_id == "Z010" || p.Use_id == "Z015").Select(p => p.Use_nm);
+        //    var daili = dps.Where(p => (p.Use_id.StartsWith("D") && p.Use_id != "D006") || p.Use_id == "Z010" || p.Use_id == "Z015").Select(p => p.Use_nm);
 
-            var zhiying = dps.Where(p => (p.Use_id.StartsWith("Z") && p.Use_id != "Z010" && p.Use_id != "Z015") || p.Use_id == "D006" || p.Use_id == "G002" || p.Use_id == "g003").Select(p => p.Use_nm);
+        //    var zhiying = dps.Where(p => (p.Use_id.StartsWith("Z") && p.Use_id != "Z010" && p.Use_id != "Z015") || p.Use_id == "D006" || p.Use_id == "G002" || p.Use_id == "g003").Select(p => p.Use_nm);
 
-            var tuihuo = dps.Select(p => p.Use_nm);
+        //    var tuihuo = dps.Select(p => p.Use_nm);
 
-            int dailiCount = daili.Count();//出货列数 29
-            int zhiyingCount = zhiying.Count();//调拨列数 12
-            int tuihuoCount = tuihuo.Count();//退货列数 45
+        //    int dailiCount = daili.Count();//出货列数 29
+        //    int zhiyingCount = zhiying.Count();//调拨列数 12
+        //    int tuihuoCount = tuihuo.Count();//退货列数 45
 
-            var sbHtml = new StringBuilder();
-            sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
-            sbHtml.Append("<tr>");
-            var lstTitle = new List<string> { "图片", "款式", "名称", "入库", "上市日期", "出货", "调拨", "退货", "销售", "库存", "单价", "金额" };
-            foreach (var item in lstTitle)
-            {
-                if (item == "出货")
-                {
-                    sbHtml.AppendFormat("<td colspan='{0}' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{1}</td>", dailiCount + 1, item);
-                }
-                else if (item == "调拨")
-                {
-                    sbHtml.AppendFormat("<td colspan='{0}' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{1}</td>", zhiyingCount + 1, item);
-                }
-                else if (item == "退货")
-                {
-                    sbHtml.AppendFormat("<td colspan='{0}' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{1}</td>", tuihuoCount + 1, item);
-                }
-                else
-                {
-                    sbHtml.AppendFormat("<td rowspan='2' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{0}</td>", item);
-                }
-            }
-            sbHtml.Append("</tr>");
+        //    var sbHtml = new StringBuilder();
+        //    sbHtml.Append("<table border='1' cellspacing='0' cellpadding='0'>");
+        //    sbHtml.Append("<tr>");
+        //    var lstTitle = new List<string> { "图片", "款式", "名称", "入库", "上市日期", "出货", "调拨", "退货", "销售", "库存", "单价", "金额" };
+        //    foreach (var item in lstTitle)
+        //    {
+        //        if (item == "出货")
+        //        {
+        //            sbHtml.AppendFormat("<td colspan='{0}' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{1}</td>", dailiCount + 1, item);
+        //        }
+        //        else if (item == "调拨")
+        //        {
+        //            sbHtml.AppendFormat("<td colspan='{0}' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{1}</td>", zhiyingCount + 1, item);
+        //        }
+        //        else if (item == "退货")
+        //        {
+        //            sbHtml.AppendFormat("<td colspan='{0}' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{1}</td>", tuihuoCount + 1, item);
+        //        }
+        //        else
+        //        {
+        //            sbHtml.AppendFormat("<td rowspan='2' style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{0}</td>", item);
+        //        }
+        //    }
+        //    sbHtml.Append("</tr>");
 
-            IList<ReportInfo> infos = (List<ReportInfo>)HttpContext.Current.Cache["reports"];
-            //string imgUrl=WebConfiguration
+        //    IList<ReportInfo> infos = (List<ReportInfo>)HttpContext.Current.Cache["reports"];
+        //    //string imgUrl=WebConfiguration
 
-            sbHtml.Append("<tr>");
-            sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", "合计");
-            foreach (string item in daili)
-            {
-                sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{0}</td>", item);
-            }
-            sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", "合计");
-            foreach (string item in zhiying)
-            {
-                sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", item);
-            }
-            sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", "合计");
-            foreach (var item in tuihuo)
-            {
-                sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", item);
-            }
+        //    sbHtml.Append("<tr>");
+        //    sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", "合计");
+        //    foreach (string item in daili)
+        //    {
+        //        sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='60'>{0}</td>", item);
+        //    }
+        //    sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", "合计");
+        //    foreach (string item in zhiying)
+        //    {
+        //        sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", item);
+        //    }
+        //    sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", "合计");
+        //    foreach (var item in tuihuo)
+        //    {
+        //        sbHtml.AppendFormat("<td  style='font-size: 14px;text-align:center;background-color: #DCE0E2; font-weight:bold;' height='20' width='80'>{0}</td>", item);
+        //    }
 
-            sbHtml.Append("</tr>");
-            string imgUrl = ConfigurationManager.AppSettings["imageUrl"].ToString();
+        //    sbHtml.Append("</tr>");
+        //    string imgUrl = ConfigurationManager.AppSettings["imageUrl"].ToString();
+        //    string imgWidth = ConfigurationManager.AppSettings["imgWidth"].ToString();
+        //    string imgHeight = ConfigurationManager.AppSettings["imgHeight"].ToString();
+        //    foreach (ReportInfo info in infos)
+        //    {
+        //        sbHtml.Append("<tr>");
+        //        //图片
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'><img style='width:{0};height:{1}' src='{2}{3}.jpg' /></td>", imgWidth, imgHeight, imgUrl, info.nsty_no);
 
-            foreach (ReportInfo info in infos)
-            {
-                sbHtml.Append("<tr>");
-                //图片
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'><img src='{0}{1}.jpg' /></td>", imgUrl, info.nsty_no);
+        //        //款式
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.nsty_no);
+        //        //名称
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.com_nm);
+        //        //入库
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.rknum);
 
-                //款式
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.nsty_no);
-                //名称
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.com_nm);
-                //入库
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.rknum);
+        //        //上市日期
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.editionhandle);
 
-                //上市日期
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.editionhandle);
-
-                //出货合计
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.chnum);
-                //出货店铺明细
-                foreach (var item in daili)
-                {
-                    var q = chdetails.Where(p => p.ent_nm == item && p.style == info.nsty_no).Select(p => new { p.style, p.com_qu }).Sum(p => p.com_qu);
-
-
-                    sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", q);
-                }
-
-                //调拨合计
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.dbnum);
-                //调拨店铺明细
-                foreach (var item in zhiying)
-                {
-                    var q = dbdetails.Where(p => p.ent_nm == item && p.style == info.nsty_no).Select(p => new { p.style, p.com_qu }).Sum(p => p.com_qu);
-                    sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", q);
-                }
-
-                //退货合计
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.thnum);
-                //退货店铺明细
-                foreach (var item in tuihuo)
-                {
-                    var q = thdetails.Where(p => p.out_nm == item && p.style == info.nsty_no).Select(p => new { p.style, p.com_qu }).Sum(p => p.com_qu);
-                    sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", q);
-                }
-                //销售
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.xsnum);
-                //库存
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.cknum);
-                //单价
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.unitprice);
-                //金额
-                sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.xsmoney);
-                sbHtml.Append("</tr>");
-            }
+        //        //出货合计
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.chnum);
+        //        //出货店铺明细
+        //        foreach (var item in daili)
+        //        {
+        //            var q = chdetails.Where(p => p.ent_nm == item && p.style == info.nsty_no).Select(p => new { p.style, p.com_qu }).Sum(p => p.com_qu);
 
 
-            sbHtml.Append("</table>");
-            return sbHtml.ToString();
+        //            sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", q);
+        //        }
 
-            //return string.Empty;
-        }
+        //        //调拨合计
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.dbnum);
+        //        //调拨店铺明细
+        //        foreach (var item in zhiying)
+        //        {
+        //            var q = dbdetails.Where(p => p.ent_nm == item && p.style == info.nsty_no).Select(p => new { p.style, p.com_qu }).Sum(p => p.com_qu);
+        //            sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", q);
+        //        }
+
+        //        //退货合计
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.thnum);
+        //        //退货店铺明细
+        //        foreach (var item in tuihuo)
+        //        {
+        //            var q = thdetails.Where(p => p.out_nm == item && p.style == info.nsty_no).Select(p => new { p.style, p.com_qu }).Sum(p => p.com_qu);
+        //            sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", q);
+        //        }
+        //        //销售
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.xsnum);
+        //        //库存
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.cknum);
+        //        //单价
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.unitprice);
+        //        //金额
+        //        sbHtml.AppendFormat("<td style='font-size: 12px;height:60px;'>{0}</td>", info.xsmoney);
+        //        sbHtml.Append("</tr>");
+        //    }
+
+
+        //    sbHtml.Append("</table>");
+        //    return sbHtml.ToString();
+
+        //    //return string.Empty;
+        //}
 
         /// <summary>
         /// 获取所有的查询到的符合条件的款式
@@ -1614,6 +1617,172 @@ namespace cosen.Models
                 if (entity != null)
                     dataContext.promotions.DeleteOnSubmit(entity);
                 dataContext.SubmitChanges();
+            }
+        }
+
+        /// <summary>
+        /// 获取制造单信息
+        /// </summary>
+        /// <param name="zdid">制造单号</param>
+        /// <returns></returns>
+        internal IList<ZhiZaoDanInfo> GetZDHById(string zdid)
+        {
+            IList<ZhiZaoDanInfo> zd_list = new List<ZhiZaoDanInfo>();
+            IList<zhizhaodan_procResult> rst = null;
+            using (dataContext = new DataContextDataContext())
+            {
+                rst = dataContext.zhizhaodan_proc(zdid).ToList();
+
+            }
+
+            var first = rst.FirstOrDefault();//返回第一个序列
+
+            int s105_total = 0;//S尺寸总数
+            int m120_total = 0;//M尺寸总数
+            int l130_total = 0;//L尺寸总数
+            int xl140_total = 0;//XL尺寸总数
+            int xxl155_total = 0;//XXL尺寸总数
+
+            int total_num = 0;//总数量
+            decimal? total_money = 0;//所有尺寸的总金额
+
+            int i = 0;
+            int len = rst.Count;
+
+            for (i = 0; i < len; i++)
+            {
+                if (first.sty_no == rst[i].sty_no && first.col_no == rst[i].col_no)
+                {
+                    switch (rst[i].siz_dr)
+                    {
+                        case "105":
+                        case "S":
+                            s105_total = (int)rst[i].com_qu;
+
+                            break;
+                        case "120":
+                        case "M":
+                            m120_total = (int)rst[i].com_qu;
+                            break;
+                        case "130":
+                        case "L":
+                            l130_total = (int)rst[i].com_qu;
+                            break;
+                        case "140":
+                        case "XL":
+                            xl140_total = (int)rst[i].com_qu;
+                            break;
+                        case "155":
+                        case "XXL":
+                            xxl155_total = (int)rst[i].com_qu;
+                            break;
+                        default: continue;
+                    }
+                    total_money += rst[i].com_qu * rst[i].unt_pr;
+                    total_num += (int)rst[i].com_qu;
+
+
+
+                }
+                else//另一个款式+颜色
+                {
+                    zd_list.Add(new ZhiZaoDanInfo()
+                    {
+                        sty_no = rst[i - 1].sty_no,
+                        col_no = rst[i - 1].col_no,
+                        com_nm = rst[i - 1].com_nm,
+                        col_dr = rst[i - 1].col_dr,
+                        com_pr = total_money,
+                        unt_pr = rst[i - 1].unt_pr,
+                        com_qu = total_num,
+                        s105 = s105_total,
+                        m120 = m120_total,
+                        l130 = l130_total,
+                        xl140 = xl140_total,
+                        xxl155 = xxl155_total
+
+                    });
+                    //从新归0操作
+                    s105_total = 0;//S尺寸总数
+                    m120_total = 0;//M尺寸总数
+                    l130_total = 0;//L尺寸总数
+                    xl140_total = 0;//XL尺寸总数
+                    xxl155_total = 0;//XXL尺寸总数
+
+                    total_num = 0;//总数量
+                    total_money = 0;//所有尺寸的总金额
+
+                    //先把之前的保存下来
+
+                    //接下来的是另一个
+                    first = rst[i];
+
+                    switch (rst[i].siz_dr)
+                    {
+                        case "105":
+                        case "S":
+                            s105_total = (int)rst[i].com_qu;
+
+                            break;
+                        case "120":
+                        case "M":
+                            m120_total = (int)rst[i].com_qu;
+                            break;
+                        case "130":
+                        case "L":
+                            l130_total = (int)rst[i].com_qu;
+                            break;
+                        case "140":
+                        case "XL":
+                            xl140_total = (int)rst[i].com_qu;
+                            break;
+                        case "155":
+                        case "XXL":
+                            xxl155_total = (int)rst[i].com_qu;
+                            break;
+                        default:
+                            continue;
+                    }
+                    total_money += rst[i].com_qu * rst[i].unt_pr;
+                    total_num += (int)rst[i].com_qu;
+
+                }
+            }
+
+            ///看是否是最后一个
+            if (i == len)
+            {
+                zd_list.Add(new ZhiZaoDanInfo()
+                {
+                    sty_no = rst[i - 1].sty_no,
+                    col_no = rst[i - 1].col_no,
+                    com_nm = rst[i - 1].com_nm,
+                    col_dr = rst[i - 1].col_dr,
+                    com_pr = total_money,
+                    unt_pr = rst[i - 1].unt_pr,
+                    com_qu = total_num,
+                    s105 = s105_total,
+                    m120 = m120_total,
+                    l130 = l130_total,
+                    xl140 = xl140_total,
+                    xxl155 = xxl155_total
+
+                });
+            }
+            return zd_list;
+        }
+
+        /// <summary>
+        /// 获取单款各店铺的配货信息
+        /// </summary>
+        /// <param name="zdid">制造单号</param>
+        /// <param name="style">款式+颜色</param>
+        /// <returns></returns>
+        internal IList<GetPeiHuo_ProcResult> GetPeiHuos(string zdid, string style)
+        {
+            using (dataContext = new DataContextDataContext())
+            {
+                return dataContext.GetPeiHuo_Proc(style, zdid).ToList();
             }
         }
     }

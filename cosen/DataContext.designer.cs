@@ -20,7 +20,6 @@ namespace cosen
 	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
-    using System.ComponentModel.DataAnnotations;
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="eissy")]
@@ -153,12 +152,6 @@ namespace cosen
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.getchdbdetail", IsComposable=true)]
-		public object getchdbdetail([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string startdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string enddate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(1000)")] string cond)
-		{
-			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), startdate, enddate, cond).ReturnValue));
-		}
-		
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.getdp")]
 		public ISingleResult<getdpResult> getdp([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string uid, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string dt1, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string dt2, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> of)
 		{
@@ -170,6 +163,26 @@ namespace cosen
 		public object report([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(10)")] string sltType, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(20)")] string dt1, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(20)")] string dt2, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(1000)")] string cond)
 		{
 			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), sltType, dt1, dt2, cond).ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.getchdbdetail", IsComposable=true)]
+		public object getchdbdetail([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string startdate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string enddate, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(1000)")] string cond)
+		{
+			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), startdate, enddate, cond).ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.zhizhaodan_proc")]
+		public ISingleResult<zhizhaodan_procResult> zhizhaodan_proc([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(100)")] string dh)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), dh);
+			return ((ISingleResult<zhizhaodan_procResult>)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.GetPeiHuo_Proc")]
+		public ISingleResult<GetPeiHuo_ProcResult> GetPeiHuo_Proc([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string style, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string zhid)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), style, zhid);
+			return ((ISingleResult<GetPeiHuo_ProcResult>)(result.ReturnValue));
 		}
 	}
 	
@@ -1264,8 +1277,7 @@ namespace cosen
 				}
 			}
 		}
-		[Display(Name="促销短语")]
-        [Required(ErrorMessage="必填项")]
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_p_content", DbType="VarChar(1000) NOT NULL", CanBeNull=false)]
 		public string p_content
 		{
@@ -1285,8 +1297,7 @@ namespace cosen
 				}
 			}
 		}
-        [Display(Name = "备注")]
-        //[Required(ErrorMessage = "必填项")]
+		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remark", DbType="VarChar(1000)")]
 		public string remark
 		{
@@ -1879,6 +1890,400 @@ namespace cosen
 				if ((this._isdp != value))
 				{
 					this._isdp = value;
+				}
+			}
+		}
+	}
+	
+	public partial class zhizhaodan_procResult
+	{
+		
+		private System.Nullable<decimal> _com_qu;
+		
+		private string _com_id;
+		
+		private string _col_no;
+		
+		private string _com_nm;
+		
+		private string _sty_no;
+		
+		private string _col_dr;
+		
+		private string _siz_no;
+		
+		private string _siz_dr;
+		
+		private System.Nullable<int> _siz_id;
+		
+		private System.Nullable<decimal> _unt_pr;
+		
+		public zhizhaodan_procResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_com_qu", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> com_qu
+		{
+			get
+			{
+				return this._com_qu;
+			}
+			set
+			{
+				if ((this._com_qu != value))
+				{
+					this._com_qu = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_com_id", DbType="VarChar(8000)")]
+		public string com_id
+		{
+			get
+			{
+				return this._com_id;
+			}
+			set
+			{
+				if ((this._com_id != value))
+				{
+					this._com_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_col_no", DbType="VarChar(8) NOT NULL", CanBeNull=false)]
+		public string col_no
+		{
+			get
+			{
+				return this._col_no;
+			}
+			set
+			{
+				if ((this._col_no != value))
+				{
+					this._col_no = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_com_nm", DbType="VarChar(100)")]
+		public string com_nm
+		{
+			get
+			{
+				return this._com_nm;
+			}
+			set
+			{
+				if ((this._com_nm != value))
+				{
+					this._com_nm = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_sty_no", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string sty_no
+		{
+			get
+			{
+				return this._sty_no;
+			}
+			set
+			{
+				if ((this._sty_no != value))
+				{
+					this._sty_no = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_col_dr", DbType="VarChar(100)")]
+		public string col_dr
+		{
+			get
+			{
+				return this._col_dr;
+			}
+			set
+			{
+				if ((this._col_dr != value))
+				{
+					this._col_dr = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_siz_no", DbType="VarChar(2) NOT NULL", CanBeNull=false)]
+		public string siz_no
+		{
+			get
+			{
+				return this._siz_no;
+			}
+			set
+			{
+				if ((this._siz_no != value))
+				{
+					this._siz_no = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_siz_dr", DbType="VarChar(100)")]
+		public string siz_dr
+		{
+			get
+			{
+				return this._siz_dr;
+			}
+			set
+			{
+				if ((this._siz_dr != value))
+				{
+					this._siz_dr = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_siz_id", DbType="Int")]
+		public System.Nullable<int> siz_id
+		{
+			get
+			{
+				return this._siz_id;
+			}
+			set
+			{
+				if ((this._siz_id != value))
+				{
+					this._siz_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_unt_pr", DbType="Decimal(10,2)")]
+		public System.Nullable<decimal> unt_pr
+		{
+			get
+			{
+				return this._unt_pr;
+			}
+			set
+			{
+				if ((this._unt_pr != value))
+				{
+					this._unt_pr = value;
+				}
+			}
+		}
+	}
+	
+	public partial class GetPeiHuo_ProcResult
+	{
+		
+		private string _use_id;
+		
+		private string _use_nm;
+		
+		private string _style;
+		
+		private System.Nullable<int> _s105;
+		
+		private System.Nullable<int> _m120;
+		
+		private System.Nullable<int> _l130;
+		
+		private System.Nullable<int> _xl140;
+		
+		private System.Nullable<int> _xxl155;
+		
+		private System.Nullable<int> _total_num;
+		
+		private System.Nullable<decimal> _unt_pr;
+		
+		private System.Nullable<decimal> _total_money;
+		
+		public GetPeiHuo_ProcResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_use_id", DbType="VarChar(20) NOT NULL", CanBeNull=false)]
+		public string use_id
+		{
+			get
+			{
+				return this._use_id;
+			}
+			set
+			{
+				if ((this._use_id != value))
+				{
+					this._use_id = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_use_nm", DbType="VarChar(100) NOT NULL", CanBeNull=false)]
+		public string use_nm
+		{
+			get
+			{
+				return this._use_nm;
+			}
+			set
+			{
+				if ((this._use_nm != value))
+				{
+					this._use_nm = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_style", DbType="VarChar(50)")]
+		public string style
+		{
+			get
+			{
+				return this._style;
+			}
+			set
+			{
+				if ((this._style != value))
+				{
+					this._style = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_s105", DbType="Int")]
+		public System.Nullable<int> s105
+		{
+			get
+			{
+				return this._s105;
+			}
+			set
+			{
+				if ((this._s105 != value))
+				{
+					this._s105 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_m120", DbType="Int")]
+		public System.Nullable<int> m120
+		{
+			get
+			{
+				return this._m120;
+			}
+			set
+			{
+				if ((this._m120 != value))
+				{
+					this._m120 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_l130", DbType="Int")]
+		public System.Nullable<int> l130
+		{
+			get
+			{
+				return this._l130;
+			}
+			set
+			{
+				if ((this._l130 != value))
+				{
+					this._l130 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_xl140", DbType="Int")]
+		public System.Nullable<int> xl140
+		{
+			get
+			{
+				return this._xl140;
+			}
+			set
+			{
+				if ((this._xl140 != value))
+				{
+					this._xl140 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_xxl155", DbType="Int")]
+		public System.Nullable<int> xxl155
+		{
+			get
+			{
+				return this._xxl155;
+			}
+			set
+			{
+				if ((this._xxl155 != value))
+				{
+					this._xxl155 = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_total_num", DbType="Int")]
+		public System.Nullable<int> total_num
+		{
+			get
+			{
+				return this._total_num;
+			}
+			set
+			{
+				if ((this._total_num != value))
+				{
+					this._total_num = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_unt_pr", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> unt_pr
+		{
+			get
+			{
+				return this._unt_pr;
+			}
+			set
+			{
+				if ((this._unt_pr != value))
+				{
+					this._unt_pr = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_total_money", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> total_money
+		{
+			get
+			{
+				return this._total_money;
+			}
+			set
+			{
+				if ((this._total_money != value))
+				{
+					this._total_money = value;
 				}
 			}
 		}

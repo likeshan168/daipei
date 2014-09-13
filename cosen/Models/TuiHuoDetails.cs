@@ -7,6 +7,7 @@ namespace cosen.Models
     public class TuiHuoDetails
     {
         public string out_nm { get; set; }
+        //public string use_ent { get; set; }
 
         public string style { get; set; }
 
