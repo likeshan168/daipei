@@ -4,6 +4,7 @@
 
 
 
+
 --促销信息表
 create table promotions
 (
@@ -1224,6 +1225,7 @@ as
  (
 	role_id int primary key identity(1,1) not null,--角色id
 	role_name varchar(30),--角色名称
+	role_zh_name varchar(30),--角色中文名称
 	remark varchar(1000)--备注
  )
  go

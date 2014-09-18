@@ -238,6 +238,13 @@ namespace cosen
 			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), user_name);
 			return ((ISingleResult<get_user_roleResult>)(result.ReturnValue));
 		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.get_user_infos")]
+		public ISingleResult<get_user_infosResult> get_user_infos([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="VarChar(30)")] string user_name, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> page, [global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> page_count)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), user_name, page, page_count);
+			return ((ISingleResult<get_user_infosResult>)(result.ReturnValue));
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dianpu")]
@@ -878,7 +885,7 @@ namespace cosen
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StyleImage", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StyleImage", DbType="Image", CanBeNull=true, UpdateCheck=UpdateCheck.Never)]
 		public System.Data.Linq.Binary StyleImage
 		{
 			get
@@ -3380,6 +3387,86 @@ namespace cosen
 		
 		public get_user_roleResult()
 		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_role_name", DbType="VarChar(30)")]
+		public string role_name
+		{
+			get
+			{
+				return this._role_name;
+			}
+			set
+			{
+				if ((this._role_name != value))
+				{
+					this._role_name = value;
+				}
+			}
+		}
+	}
+	
+	public partial class get_user_infosResult
+	{
+		
+		private System.Nullable<long> _row_num;
+		
+		private string _user_name;
+		
+		private string _user_pass;
+		
+		private string _role_name;
+		
+		public get_user_infosResult()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_row_num", DbType="BigInt")]
+		public System.Nullable<long> row_num
+		{
+			get
+			{
+				return this._row_num;
+			}
+			set
+			{
+				if ((this._row_num != value))
+				{
+					this._row_num = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_name", DbType="VarChar(30) NOT NULL", CanBeNull=false)]
+		public string user_name
+		{
+			get
+			{
+				return this._user_name;
+			}
+			set
+			{
+				if ((this._user_name != value))
+				{
+					this._user_name = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_user_pass", DbType="VarChar(200) NOT NULL", CanBeNull=false)]
+		public string user_pass
+		{
+			get
+			{
+				return this._user_pass;
+			}
+			set
+			{
+				if ((this._user_pass != value))
+				{
+					this._user_pass = value;
+				}
+			}
 		}
 		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_role_name", DbType="VarChar(30)")]

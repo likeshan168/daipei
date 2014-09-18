@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace cosen.Models
 {
     public interface ILogicModel
@@ -32,7 +33,24 @@ namespace cosen.Models
         bool ThumbnailCallback();
         string UpdateDate(string styleNo, string date, int? cxinfo);
         void UpdatePromotionInfo(cosen.promotions pro);
-        System.Collections.Generic.IList<ImageInfo> UploadImg(System.Web.HttpContext context, System.Net.Http.HttpRequestMessage request);
+        IList<ImageInfo> UploadImg(System.Web.HttpContext context, System.Net.Http.HttpRequestMessage request);
+
+        /// <summary>
+        /// 验证用户
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">密码</param>
+        /// <returns></returns>
         bool ValidateUser(string userName, string password);
+        /// <summary>
+        /// 获取用户信息列表
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="pageCount">页行数</param>
+        /// <param name="user_name">用户名</param>
+        /// <returns></returns>
+        IList<get_user_infosResult> Get_User_List(int page, int pageCount, string user_name);
+
+
     }
 }

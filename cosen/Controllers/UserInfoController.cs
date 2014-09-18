@@ -9,17 +9,17 @@ namespace cosen.Controllers
 {
     public class UserInfoController : Controller
     {
+        /// <summary>
+        /// 逻辑代理
+        /// </summary>
         [Ninject.Inject]
         private ILogicModel logicModel { get; set; }
-        //public UserInfoController()
-        //{
-        //    this.logicModel = new LogicModel();
-        //}
-        // GET: /UserInfo/
+
         [MyAuthorize(Roles = "system")]
         public ActionResult Index()
         {
-            return View();
+            //默认的状态就是获取第一页 10行数据
+            return View(logicModel.Get_User_List(1, 10, ""));
         }
 
         //

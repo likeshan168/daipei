@@ -225,4 +225,15 @@
       <Column Name="role_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
     </ElementType>
   </Function>
+  <Function Name="dbo.get_user_infos" Method="get_user_infos">
+    <Parameter Name="user_name" Type="System.String" DbType="VarChar(30)" />
+    <Parameter Name="page" Type="System.Int32" DbType="Int" />
+    <Parameter Name="page_count" Type="System.Int32" DbType="Int" />
+    <ElementType Name="get_user_infosResult">
+      <Column Name="row_num" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="user_name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="user_pass" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="role_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+    </ElementType>
+  </Function>
 </Database>

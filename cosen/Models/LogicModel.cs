@@ -2041,5 +2041,20 @@ namespace cosen.Models
             fs.Close();
             return path;
         }
+
+        /// <summary>
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="page">页码</param>
+        /// <param name="pageCount">页行数</param>
+        /// <param name="user_name">用户名</param>
+        /// <returns></returns>
+        public IList<get_user_infosResult> Get_User_List(int page, int pageCount, string user_name)
+        {
+            using (dataContext = new DataContextDataContext())
+            {
+                return dataContext.get_user_infos(user_name, page, pageCount).ToList();
+            }
+        }
     }
 }
