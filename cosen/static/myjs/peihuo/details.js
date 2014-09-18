@@ -7,6 +7,7 @@
     var PeiHuoModel = Backbone.Model.extend({
         defaults: {
             use_id: "",//店铺id
+            use_nm: "",//店铺名称
             style: "",//款式+颜色
             s105: 0,//S:尺码数量
             m120: 0,//M:尺码数量
@@ -17,7 +18,8 @@
             unt_pr: 0,//吊牌价
             total_money: 0,//总金额
             remark: ""//备注
-        }
+        },
+        url: '/api/ph/saveph'
     });
 
     var PeiHuoCollection = Backbone.Collection.extend({
@@ -35,11 +37,13 @@
 
             this.$el.html(this.template(this.model.toJSON()));
             return this;
-        }
+        },
+
     });
 
     module.exports = {
         "PeiHuoView": PeiHuoView,
-        "PeiHuoCollection": PeiHuoCollection
+        "PeiHuoCollection": PeiHuoCollection,
+        "PeiHuoModel": PeiHuoModel
     };
 });

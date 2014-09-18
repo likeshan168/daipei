@@ -110,3 +110,14 @@ C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Sys
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\zh-Hans\EntityFramework.SqlServer.resources.dll
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\zh-Hans\System.Net.Http.resources.dll
 C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\zh-Hans\System.Net.Http.WebRequest.resources.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Ninject.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Ninject.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Ninject.Web.Common.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Ninject.Web.Mvc.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\WebActivatorEx.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Ninject.Web.Common.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Ninject.Web.Mvc.xml
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\CommonServiceLocator.NinjectAdapter.Unofficial.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Microsoft.Practices.ServiceLocation.dll
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Microsoft.Practices.ServiceLocation.pdb
+C:\Users\Administrator\Documents\Visual Studio 2013\Projects\cosen\cosen\bin\Microsoft.Practices.ServiceLocation.xml

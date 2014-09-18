@@ -10,22 +10,27 @@ using System.Web.Http;
 
 namespace cosen.Controllers
 {
-    public class 
-        DpApiController : ApiController
+    public class DpApiController : ApiController
     {
-        private LogicModel logic = null;
+        [Ninject.Inject]
+        private ILogicModel logic { get; set; }
+
+        //private ILogicModel logic;
+        //public DpApiController(ILogicModel logic)
+        //{
+        //    this.logic = logic;
+        //}
+
         [HttpGet]
         public StylesJsonData GetStyles()
         {
             //throw new HttpResponseException(HttpStatusCode.InternalServerError);//不能被过滤器捕捉
             //throw new Exception("web api 异常");//能被过滤器捕捉
-            logic = new LogicModel();
             return logic.GetStyleJson(HttpContext.Current);
         }
         [HttpPost]
         public string SaveDp()
         {
-            logic = new LogicModel();
             return logic.SaveDp(HttpContext.Current);
 
         }
@@ -46,8 +51,6 @@ namespace cosen.Controllers
         [HttpPost]
         public IList<ImageInfo> UploadImg()
         {
-
-            logic = new LogicModel();
             return logic.UploadImg(HttpContext.Current, Request);
 
         }
@@ -60,8 +63,6 @@ namespace cosen.Controllers
         [HttpPost]
         public HttpResponseMessage DelImg(string imgType, string imgName, string dpid)
         {
-            logic = new LogicModel();
-            //Sanitizer.GetSafeHtmlFragment(imgType);
             return logic.DelImg(imgType, imgName, dpid, Request);
         }
         /// <summary>
@@ -75,7 +76,6 @@ namespace cosen.Controllers
         //[ActionName("Post")]
         public ImageViewInfo SearchImg(string imgName, string imgType, int imgPage, string dpid)
         {
-            logic = new LogicModel();
             return new ImageViewInfo { files = logic.SearchImg(imgName, imgType, imgPage, dpid, HttpContext.Current) };
         }
         /// <summary>
@@ -88,7 +88,6 @@ namespace cosen.Controllers
         [HttpPost]
         public string SaveImgName(string oldName, string newName, string imgType, string dpid)
         {
-            logic = new LogicModel();
             return logic.SaveImgName(oldName, newName, imgType, dpid, HttpContext.Current);
         }
         /// <summary>
@@ -101,7 +100,6 @@ namespace cosen.Controllers
         [HttpGet]
         public DaPeiInfo GetDaiPei(string sltDp, int pageNum, string tjDate, string filterType, string filterValue)
         {
-            logic = new LogicModel();
             DaPeiInfo rst = logic.GetDaiPei(sltDp, pageNum, tjDate, filterType, filterValue, HttpContext.Current);
             return rst;
         }
@@ -115,9 +113,6 @@ namespace cosen.Controllers
         [HttpPost]
         public string SaveTuiJianDp(string dpid, string tjdate, string tjdp, string remark)
         {
-            logic = new LogicModel();
-
-
             return logic.SaveTuiJianDp(dpid, tjdate, tjdp, remark);
 
         }
@@ -130,7 +125,6 @@ namespace cosen.Controllers
         [HttpPost]
         public IList<DaPei> LookUpTjDp(string dpid, string tjdate)
         {
-            logic = new LogicModel();
             return logic.LookUpTjDp(dpid, tjdate);
         }
 
@@ -141,7 +135,6 @@ namespace cosen.Controllers
         [HttpPost]
         public IQueryable LookAllTjDp()
         {
-            logic = new LogicModel();
             return logic.LookAllTjDp();
         }
         /// <summary>
@@ -151,7 +144,6 @@ namespace cosen.Controllers
         [HttpPost]
         public IQueryable LookAllTjDp(string dpId)
         {
-            logic = new LogicModel();
             return logic.LookAllTjDp(dpId);
         }
         /// <summary>
@@ -164,14 +156,12 @@ namespace cosen.Controllers
         [HttpPost]
         public IQueryable GetDpByMaster(string style, string dpType, string gtype)
         {
-            logic = new LogicModel();
             return logic.GetDpByMaster(style, dpType, gtype);
 
         }
         [HttpGet]
         public IList<dianpu> GetDianpus()
         {
-            logic = new LogicModel();
             return logic.GetDianpuList();
 
         }

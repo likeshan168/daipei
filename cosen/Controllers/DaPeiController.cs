@@ -7,12 +7,17 @@ namespace cosen.Controllers
 {
     public class DaPeiController : Controller
     {
-
+        [Ninject.Inject]
+        private ILogicModel logicModel { get; set; }
+        //public DaPeiController()
+        //{
+        //    this.logicModel = new LogicModel();
+        //}
         /// <summary>
         /// 进行搭配
         /// </summary>
         /// <returns></returns>
-        [Authorize]//如果没有登录的话，就会跳转到web.config中设置的登录界面中
+        [MyAuthorize]//如果没有登录的话，就会跳转到web.config中设置的登录界面中
         public ActionResult Arrange()
         {
             return View();
@@ -21,31 +26,28 @@ namespace cosen.Controllers
         /// 推荐搭配
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [MyAuthorize]
         public ActionResult SuggestPairs()
         {
-            LogicModel logic = new LogicModel();
-
-            ViewData["list"] = logic.GetDianpus();
+            ViewData["list"] = logicModel.GetDianpus();
             return View();
         }
         /// <summary>
         /// 上传图片
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [MyAuthorize]
         public ActionResult UploadImg()
         {
-            LogicModel logic = new LogicModel();
 
-            ViewData["list"] = logic.GetDianpus();
+            ViewData["list"] = logicModel.GetDianpus();
             return View();
         }
         /// <summary>
         /// 查看搭配
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [MyAuthorize]
         public ActionResult LookPairs()
         {
             return View();
@@ -55,7 +57,7 @@ namespace cosen.Controllers
         /// UP4 软件中的图片
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [MyAuthorize]
         [HttpGet]
         public ActionResult Up4Image()
         {
@@ -66,32 +68,29 @@ namespace cosen.Controllers
         /// </summary>
         /// <param name="styleNo"></param>
         /// <returns></returns>
-        [Authorize]
+        [MyAuthorize]
         [HttpPost]
         public ActionResult Up4Image(string styleNo)
         {
-            LogicModel logic = new LogicModel();
             ViewData["styleNo"] = styleNo;
-            return View(logic.GetUp4Images(styleNo));
+            return View(logicModel.GetUp4Images(styleNo));
         }
         /// <summary>
         /// 显示图片
         /// </summary>
         /// <param name="styleNo">款式代码</param>
         /// <returns></returns>
-        [Authorize]
+        [MyAuthorize]
         public FileResult ShowImage(string styleNo)
         {
-            LogicModel logic = new LogicModel();
-
-            return File(logic.ShowImage(styleNo).ToArray(), "image/jpg");
+            return File(logicModel.ShowImage(styleNo).ToArray(), "image/jpg");
 
         }
         /// <summary>
         /// 用户管理
         /// </summary>
         /// <returns></returns>
-        [Authorize]
+        [MyAuthorize]
         [HttpGet]
         public ActionResult Users()
         {

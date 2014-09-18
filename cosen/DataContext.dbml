@@ -81,6 +81,45 @@
       <Column Name="Remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.PeiHuo" Member="PeiHuo">
+    <Type Name="PeiHuo">
+      <Column Name="zhid" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="use_id" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="style" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="s105" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="m120" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="l130" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="xl140" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="xxl155" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="total_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="unt_pr" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="total_money" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="ph_date" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ph_update_date" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ph_per" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ph_update_per" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.user_info" Member="user_info">
+    <Type Name="user_info">
+      <Column Name="user_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="user_name" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="user_pass" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="role_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="create_date" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="update_date" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="last_login_date" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.role_info" Member="role_info">
+    <Type Name="role_info">
+      <Column Name="role_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="role_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+    </Type>
+  </Table>
   <Function Name="dbo.getdp" Method="getdp">
     <Parameter Name="uid" Type="System.String" DbType="VarChar(30)" />
     <Parameter Name="dt1" Type="System.String" DbType="VarChar(30)" />
@@ -155,6 +194,35 @@
       <Column Name="total_num" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="unt_pr" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
       <Column Name="total_money" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.GetMan_No_Proc" Method="GetMan_No_Proc">
+    <ElementType Name="GetMan_No_ProcResult">
+      <Column Name="Man_no" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Sys_dt" Type="System.String" DbType="VarChar(10) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Out_Excel_Proc" Method="Out_Excel_Proc">
+    <Parameter Name="zdid" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="Out_Excel_ProcResult">
+      <Column Name="use_nm" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="style" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="com_nm" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="col_dr" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="s105" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="m120" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="l130" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="xl140" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="xxl155" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="total_num" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="unt_pr" Type="System.Decimal" DbType="Decimal(18,0) NOT NULL" CanBeNull="false" />
+      <Column Name="total_money" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.get_user_role" Method="get_user_role">
+    <Parameter Name="user_name" Type="System.String" DbType="VarChar(30)" />
+    <ElementType Name="get_user_roleResult">
+      <Column Name="role_name" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
     </ElementType>
   </Function>
 </Database>

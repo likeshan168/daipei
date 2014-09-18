@@ -1,4 +1,9 @@
-﻿<link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+﻿@{
+
+    ViewBag.Title = "配货";
+}
+
+<link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
 
 <link href="~/Content/themes/base/all.css" rel="stylesheet" />
 <div id="body">
@@ -14,11 +19,14 @@
             <form id="search_frm" class="form-horizontal" role="form">
                 <div class="form-group">
                     <label for="inputzhd" class="col-sm-2 control-label">制造单编号</label>
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <input type="text" class="form-control" id="inputzhd" placeholder="制造单编号">
                     </div>
                     <div class="col-sm-2">
                         <button type="submit" class="btn btn-default">查询</button>
+                    </div>
+                    <div class="col-sm-1">
+                        <a href="/PeiHuo/OutputExcel" id="out_excel" target="_blank" class="btn btn-warning disabled">Excel</a>
                     </div>
                     <div class="col-sm-2">
                         <div id="showMsg" style="display:none;">
@@ -26,15 +34,15 @@
                         </div>
                     </div>
                     <div class="col-sm-2">
-                        <div id="draggable" class="ui-widget-header" style="z-index:1000">拖动添加模板</div>
+                        <div id="draggable" style="z-index:1000"><span class="glyphicon glyphicon-tree-conifer"></span> 拖动添加模板</div>
                     </div>
                 </div>
             </form>
         </div>
 
-      
 
-        
+
+
 
         <div class="row" id="table_header" style="color:blue;">
             <div class="col-sm-1"><strong>图片</strong> </div>
@@ -129,75 +137,102 @@
 </script>
 
 <script type="text/template" id="peihuo_template">
-    <div class="col-sm-4">
-        <%=use_nm%>
+    <div class="col-sm-1">
+        <a href="javascript:void(0);" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
     </div>
     <div class="col-sm-1">
-        <input type="text" class="form-control input-sm" value="<%=s105%>" />
+        <a href="javascript:void(0);" class="btn btn-success"><span class="glyphicon glyphicon-star"></span></a>
+    </div>
+    <div class="col-sm-2">
+        <select class="form-control">
+            <option value="<%=use_id%>"><%=use_nm%></option>
+        </select>
+    </div>
+    <div class="col-sm-1">
+        <input type="text" class="form-control input-sm s105" value="<%=s105%>" data-id="s105" />
     </div>
     <div class="col-sm-1">
 
-        <input type="text" class="form-control input-sm" value="<%=m120%>" />
+        <input type="text" class="form-control input-sm m120" value="<%=m120%>" data-id="m120" />
     </div>
     <div class="col-sm-1">
-        <input type="text" class="form-control input-sm" value="<%=l130%>" />
+        <input type="text" class="form-control input-sm l130" value="<%=l130%>" data-id="l130" />
 
     </div>
     <div class="col-sm-1">
-        <input type="text" class="form-control input-sm" value="<%=xl140%>" />
+        <input type="text" class="form-control input-sm xl140" value="<%=xl140%>" data-id="xl140" />
 
     </div>
     <div class="col-sm-1">
-        <input type="text" class="form-control input-sm" value="<%=xxl155%>" />
+        <input type="text" class="form-control input-sm xxl155" value="<%=xxl155%>" data-id="xxl155" />
 
     </div>
     <div class="col-sm-1">
-        <input type="text" class="form-control input-sm" readonly="readonly" value="<%=total_num%>" />
-
+        @*<input type="text" class="form-control input-sm" readonly="readonly" value="<%=total_num%>" />*@
+        <label>
+            <%=total_num%>
+        </label>
     </div>
     <div class="col-sm-1">
-        <input type="text" class="form-control input-sm" readonly="readonly" value="<%=unt_pr%>" />
-
+        @*<input type="text" class="form-control input-sm" readonly="readonly" value="<%=unt_pr%>" />*@
+        <label>
+            <%=unt_pr%>
+        </label>
     </div>
     <div class="col-sm-1">
-        <input type="text" class="form-control input-sm" readonly="readonly" value="<%=total_money%>" />
+        @*<input type="text" class="form-control input-sm" readonly="readonly" value="<%=total_money%>" />*@
+        <label>
+            <%=total_money%>
+        </label>
     </div>
 </script>
 
 <script type="text/template" id="row_template">
-    <div class="row ui-state-default">
-        <div class="col-sm-4">
-            <select class="form-control"></select>
+    <div class="row ui-state-default" data-style="<%=style%>">
+        <div class="col-sm-1">
+            <a href="javascript:void(0);" class="btn btn-danger"><span class="glyphicon glyphicon-remove-circle"></span></a>
         </div>
         <div class="col-sm-1">
-            <input type="text" class="form-control input-sm" />
+            <a href="javascript:void(0);" class="btn btn-info"><span class="glyphicon glyphicon-star-empty"></span></a>
+        </div>
+        <div class="col-sm-2">
+            <select class="form-control">
+                <%  $.each(dps,function(index,value){ %>
+                <option value="<%=value.Use_id%>"><%=value.Use_nm%></option>
+                <%  }) %>
+            </select>
+        </div>
+        <div class="col-sm-1">
+            <input type="text" class="form-control input-sm s105" data-id="s105" />
         </div>
         <div class="col-sm-1">
 
-            <input type="text" class="form-control input-sm" />
+            <input type="text" class="form-control input-sm m120" data-id="m120" />
         </div>
         <div class="col-sm-1">
-            <input type="text" class="form-control input-sm" />
+            <input type="text" class="form-control input-sm l130" data-id="l130" />
 
         </div>
         <div class="col-sm-1">
-            <input type="text" class="form-control input-sm" />
+            <input type="text" class="form-control input-sm xl140" data-id="xl140" />
 
         </div>
         <div class="col-sm-1">
-            <input type="text" class="form-control input-sm" />
+            <input type="text" class="form-control input-sm xxl155" data-id="xxl155" />
 
         </div>
         <div class="col-sm-1">
-            <input type="text" class="form-control input-sm" readonly="readonly" />
+            @*<input type="text" class="form-control" readonly="readonly" />*@
+            <label></label>
+        </div>
+        <div class="col-sm-1">
+            @*<input type="text" class="form-control" readonly="readonly" />*@
+            <label></label>
 
         </div>
         <div class="col-sm-1">
-            <input type="text" class="form-control input-sm" readonly="readonly" />
-
-        </div>
-        <div class="col-sm-1">
-            <input type="text" class="form-control input-sm" readonly="readonly" />
+            @*<input type="text" class="form-control" readonly="readonly" />*@
+            <label></label>
         </div>
     </div>
 

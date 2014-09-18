@@ -1,0 +1,64 @@
+﻿@{
+
+    ViewBag.Title = "用户管理";
+}
+
+@model IEnumerable<cosen.user_info>
+    <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <div id="body">
+        <section class="featured">
+            <div class="content-wrapper">
+                <hgroup class="title">
+                    <h3>欢迎来到作业指导管理系统!</h3>
+                </hgroup>
+            </div>
+        </section>
+        <section class="content-wrapper main-content clear-fix">
+            <div class="container">
+
+                <div class="row">
+                    <form>
+                        @*<div class="col-sm-2">
+                                用户名
+                            </div>*@
+                        <div class="col-sm-4">
+                            <input type="text" placeholder="用户名" name="user_name" id="user_name" />
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-default" id="btn_submit">查询</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <span id="show_msg" style="display:none"></span>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <table class="table table-hover table-condensed">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>用户名</th>
+                                <th>密码</th>
+                                <th>角色</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </section>
+    </div>

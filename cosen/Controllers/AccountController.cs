@@ -6,7 +6,12 @@ namespace cosen.Controllers
 {
     public class AccountController : Controller
     {
-
+        [Ninject.Inject]
+        private ILogicModel logicModel { get; set; }
+        //public AccountController()
+        //{
+        //    this.logicModel = new LogicModel();
+        //}
         /// <summary>
         /// 登录页面
         /// </summary>
@@ -28,25 +33,36 @@ namespace cosen.Controllers
         [ValidateAntiForgeryToken]//防止csrf攻击
         public ActionResult LogOn(LoginModel loginModel, string returnUrl)
         {
-            
-            
-            if (ModelState.IsValid && Membership.ValidateUser(loginModel.UserName,loginModel.Password))
-            {
-                //没有对cookie设置过期时间的话，关闭浏览器就会退出登录
-                FormsAuthentication.SetAuthCookie(loginModel.UserName, false);
 
-                //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(loginModel.UserName,false,30);
-                //string hashCookie=FormsAuthentication.Encrypt(ticket);
-                //HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hashCookie);
-                ////cookie.Expires = DateTime.Now.AddSeconds(0);
-                //Response.Cookies.Add(cookie);
+
+            //if (ModelState.IsValid && Membership.ValidateUser(loginModel.UserName,loginModel.Password))
+            //{
+            //    //没有对cookie设置过期时间的话，关闭浏览器就会退出登录
+            //    FormsAuthentication.SetAuthCookie(loginModel.UserName, false);
+
+            //    //FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(loginModel.UserName,false,30);
+            //    //string hashCookie=FormsAuthentication.Encrypt(ticket);
+            //    //HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, hashCookie);
+            //    ////cookie.Expires = DateTime.Now.AddSeconds(0);
+            //    //Response.Cookies.Add(cookie);
+            //    return RedirectToLocal(returnUrl);
+            //}
+            //自定义判断
+            if (ModelState.IsValid && logicModel.ValidateUser(loginModel.UserName, loginModel.Password))
+            {
+                FormsAuthentication.SetAuthCookie(loginModel.UserName, false);
                 return RedirectToLocal(returnUrl);
+
+
             }
+
             ModelState.AddModelError("", "用户名或者密码不正确。");
+
+            //HttpContext.User.Identity.IsAuthenticated
             return View(loginModel);
         }
-        
-       
+
+
 
         [HttpGet]
         public ActionResult AddUser(LoginModel model)
@@ -68,7 +84,7 @@ namespace cosen.Controllers
         /// 退出浏览器
         /// </summary>
         [HttpGet]
-         public string Exit()
+        public string Exit()
         {
             FormsAuthentication.SignOut();
             return "ok";

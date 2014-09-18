@@ -16,7 +16,7 @@ namespace cosen.Controllers
             return View(logic.GetDianpus());
         }
         [AcceptVerbs(HttpVerbs.Get)]
-        
+
         public ActionResult Json()
         {
             //Response.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -55,6 +55,17 @@ namespace cosen.Controllers
         public ActionResult Knockout1()
         {
             return View();
+        }
+
+
+        public ActionResult Chart()
+        {
+            return View();
+        }
+
+        public ContentResult MD5()
+        {
+            return Content(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile("cosen", "MD5"));
         }
 
     }

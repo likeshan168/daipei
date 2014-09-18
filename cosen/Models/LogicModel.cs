@@ -12,16 +12,32 @@ using System.Web.Mvc;
 using System.Text;
 using System.Configuration;
 using System.Drawing;
-
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using NPOI.HSSF.UserModel;
+using System.Web.Security;
 
 namespace cosen.Models
 {
-    public class LogicModel
+    public class LogicModel : cosen.Models.ILogicModel
     {
         private DataContextDataContext dataContext = null;
         public LogicModel()
         {
             //this.dataContext = new DataContextDataContext();
+        }
+        /// <summary>
+        /// 验证用户登录
+        /// </summary>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">密码</param>
+        /// <returns>true:验证成功，false:验证失败</returns>
+        public bool ValidateUser(string userName, string password)
+        {
+            using (dataContext = new DataContextDataContext())
+            {
+                return dataContext.user_info.FirstOrDefault(p => p.user_name == userName && p.user_pass == FormsAuthentication.HashPasswordForStoringInConfigFile(password, "MD5")) != null;
+            }
         }
         /// <summary>
         /// 获取所有店铺（专用于下拉框的）
@@ -699,7 +715,7 @@ namespace cosen.Models
         /// 查询所有的店铺推荐信息
         /// </summary>
         /// <returns></returns>
-        internal IQueryable LookAllTjDp()
+        public IQueryable LookAllTjDp()
         {
             dataContext = new DataContextDataContext();
 
@@ -718,7 +734,7 @@ namespace cosen.Models
         /// </summary>
         /// <param name="dpId">店铺id</param>
         /// <returns></returns>
-        internal IQueryable LookAllTjDp(string dpId)
+        public IQueryable LookAllTjDp(string dpId)
         {
             dataContext = new DataContextDataContext();
             return dataContext.tjdp.Where(p => p.use_id == dpId).OrderByDescending(p => p.tjdate).Select(p => new { tjdate = p.tjdate }).Distinct().Take(10).OrderByDescending(p => p.tjdate);
@@ -732,7 +748,7 @@ namespace cosen.Models
         /// <param name="dpType">搭配类型</param>
         /// <param name="gtype">标志：single表示根据主打款查询，compose表示根据组合图进行查询</param>
         /// <returns></returns>
-        internal IQueryable GetDpByMaster(string style, string dpType, string gtype)
+        public IQueryable GetDpByMaster(string style, string dpType, string gtype)
         {
             dataContext = new DataContextDataContext();
             if (gtype == "single")//说明是按主打款进行查询搭配图片信息的
@@ -1489,7 +1505,7 @@ namespace cosen.Models
         /// </summary>
         /// <param name="httpContext">上下文信息（获取表单信息）</param>
         /// <returns></returns>
-        internal string SaveDp(HttpContext httpContext)
+        public string SaveDp(HttpContext httpContext)
         {
             try
             {
@@ -1552,7 +1568,7 @@ namespace cosen.Models
         /// 获取促销信息
         /// </summary>
         /// <returns></returns>
-        internal IList<promotions> GetPromotionInfo()
+        public IList<promotions> GetPromotionInfo()
         {
             using (dataContext = new DataContextDataContext())
             {
@@ -1563,7 +1579,7 @@ namespace cosen.Models
         /// 添加促销信息
         /// </summary>
         /// <param name="pro"></param>
-        internal void AddPromotionInfo(promotions pro)
+        public void AddPromotionInfo(promotions pro)
         {
             using (dataContext = new DataContextDataContext())
             {
@@ -1579,7 +1595,7 @@ namespace cosen.Models
         /// </summary>
         /// <param name="id">编号</param>
         /// <returns></returns>
-        internal promotions GetPromotionInfoById(int? id)
+        public promotions GetPromotionInfoById(int? id)
         {
             using (dataContext = new DataContextDataContext())
             {
@@ -1592,7 +1608,7 @@ namespace cosen.Models
         /// 更新促销信息
         /// </summary>
         /// <param name="pro"></param>
-        internal void UpdatePromotionInfo(promotions pro)
+        public void UpdatePromotionInfo(promotions pro)
         {
             using (dataContext = new DataContextDataContext())
             {
@@ -1609,7 +1625,7 @@ namespace cosen.Models
         /// 删除项
         /// </summary>
         /// <param name="id"></param>
-        internal void DelPromotionInfo(int id)
+        public void DelPromotionInfo(int id)
         {
             using (dataContext = new DataContextDataContext())
             {
@@ -1625,7 +1641,7 @@ namespace cosen.Models
         /// </summary>
         /// <param name="zdid">制造单号</param>
         /// <returns></returns>
-        internal IList<ZhiZaoDanInfo> GetZDHById(string zdid)
+        public IList<ZhiZaoDanInfo> GetZDHById(string zdid)
         {
             IList<ZhiZaoDanInfo> zd_list = new List<ZhiZaoDanInfo>();
             IList<zhizhaodan_procResult> rst = null;
@@ -1750,7 +1766,7 @@ namespace cosen.Models
             }
 
             ///看是否是最后一个
-            if (i == len)
+            if (i != 0 && i == len)
             {
                 zd_list.Add(new ZhiZaoDanInfo()
                 {
@@ -1778,12 +1794,252 @@ namespace cosen.Models
         /// <param name="zdid">制造单号</param>
         /// <param name="style">款式+颜色</param>
         /// <returns></returns>
-        internal IList<GetPeiHuo_ProcResult> GetPeiHuos(string zdid, string style)
+        public IList<GetPeiHuo_ProcResult> GetPeiHuos(string zdid, string style)
         {
             using (dataContext = new DataContextDataContext())
             {
+                HttpContext.Current.Cache["zdid"] = zdid;
                 return dataContext.GetPeiHuo_Proc(style, zdid).ToList();
             }
+        }
+        /// <summary>
+        /// 保存店铺的配货信息
+        /// </summary>
+        /// <param name="ph">配货信息</param>
+        /// <returns></returns>
+        public string SavePh(GetPeiHuo_ProcResult ph)
+        {
+            using (dataContext = new DataContextDataContext())
+            {
+                string zdid = (string)HttpContext.Current.Cache["zdid"];
+                var entity = dataContext.PeiHuo.FirstOrDefault(p => p.zhid == zdid && p.style == ph.style && p.use_id == ph.use_id);
+
+                if (entity == null)//新增
+                {
+                    entity = new PeiHuo();
+                    entity.zhid = zdid;
+                    entity.use_id = ph.use_id;
+                    entity.style = ph.style;
+                    entity.s105 = ph.s105;
+                    entity.m120 = ph.m120;
+                    entity.l130 = ph.l130;
+                    entity.xl140 = ph.xl140;
+                    entity.xxl155 = ph.xxl155;
+                    entity.total_num = ph.total_num;
+                    entity.unt_pr = ph.unt_pr;
+                    entity.total_money = ph.total_money;
+                    string date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    entity.ph_date = date;
+                    entity.ph_update_date = date;
+                    entity.ph_per = HttpContext.Current.User.Identity.Name;
+                    entity.ph_update_per = HttpContext.Current.User.Identity.Name;
+
+                    dataContext.PeiHuo.InsertOnSubmit(entity);
+                }
+                else//那就是更新
+                {
+                    entity.s105 = ph.s105;
+                    entity.m120 = ph.m120;
+                    entity.l130 = ph.l130;
+                    entity.xl140 = ph.xl140;
+                    entity.xxl155 = ph.xxl155;
+                    entity.total_num = ph.total_num;
+                    entity.unt_pr = ph.unt_pr;
+                    entity.total_money = ph.total_money;
+                    string date = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    entity.ph_update_date = date;
+                    entity.ph_update_per = HttpContext.Current.User.Identity.Name;
+                }
+
+                dataContext.SubmitChanges();
+
+                return "success";
+            }
+        }
+        /// <summary>
+        /// 删除配货信息
+        /// </summary>
+        /// <param name="style">款式+颜色</param>
+        /// <param name="use_id">店铺id</param>
+        /// <returns>提示信息</returns>
+        public string DelPh(string style, string use_id)
+        {
+            using (dataContext = new DataContextDataContext())
+            {
+                string zdid = (string)HttpContext.Current.Cache["zdid"];
+                var entity = dataContext.PeiHuo.FirstOrDefault(p => p.zhid == zdid && p.style == style && p.use_id == use_id);
+                if (entity != null)
+                {
+                    dataContext.PeiHuo.DeleteOnSubmit(entity);
+                    dataContext.SubmitChanges();
+                }
+
+                return "success";
+            }
+        }
+        /// <summary>
+        /// 后去制单编号
+        /// </summary>
+        /// <returns></returns>
+        public IList<string> Get_Man_No()
+        {
+            using (dataContext = new DataContextDataContext())
+            {
+                //IList<string> rsts = new List<string>();
+                return dataContext.GetMan_No_Proc().Select(p => p.Man_no + "(" + p.Sys_dt + ")").ToList<string>();
+
+            }
+        }
+        /// <summary>
+        /// 导出配货excel 
+        /// </summary>
+        /// <returns></returns>
+        public string PhExcel(string zdid)
+        {
+            //string zdid = (string)HttpContext.Current.Cache["zdid"];
+            //创建excel工作簿
+            IWorkbook book = new HSSFWorkbook();
+            ISheet sheet = book.CreateSheet("配货报表");
+            //标题行
+            IRow row = sheet.CreateRow(0);
+
+            row.CreateCell(0).SetCellValue("店铺");
+            row.CreateCell(1).SetCellValue("款式");
+            row.CreateCell(2).SetCellValue("图片");
+            row.CreateCell(3).SetCellValue("名称");
+            row.CreateCell(4).SetCellValue("颜色");
+            row.CreateCell(5).SetCellValue("105(S)");
+            row.CreateCell(6).SetCellValue("120(M)");
+            row.CreateCell(7).SetCellValue("130(L)");
+            row.CreateCell(8).SetCellValue("140(XL)");
+            row.CreateCell(9).SetCellValue("155(XXL)");
+            row.CreateCell(10).SetCellValue("总数量");
+            row.CreateCell(11).SetCellValue("吊牌价");
+            row.CreateCell(12).SetCellValue("总金额");
+
+            sheet.SetColumnWidth(1, 200 * 20);//店铺
+            sheet.SetColumnWidth(2, 200 * 14);//图片
+            sheet.SetColumnWidth(3, 200 * 20);//名称
+            IList<Out_Excel_ProcResult> phs = null;
+            using (dataContext = new DataContextDataContext())
+            {
+                phs = dataContext.Out_Excel_Proc(zdid).ToList();
+            }
+
+            var first = phs.FirstOrDefault();
+            //int rowCount;
+            //int col_index = 1;
+            //int row_start = 1;
+            int row_index = 1;
+            byte[] img_bytes;
+            int pictureIdx;
+            HSSFPatriarch patriarch;
+            string path = HttpContext.Current.Server.MapPath("~/static/images/single");
+            string tmp_path = string.Empty;
+            HSSFClientAnchor anchor;
+            HSSFPicture pict;
+            if (first != null)
+            {
+
+                patriarch = (HSSFPatriarch)sheet.CreateDrawingPatriarch();
+                //rowCount = phs.Count();
+
+                foreach (var item in phs)
+                {
+                    //if (first.use_nm == item.use_nm)//相同的店铺
+                    //{
+                    row = sheet.CreateRow(row_index++);
+                    row.Height = 100 * 10;
+                    row.CreateCell(0).SetCellValue(item.use_nm);//店铺名称
+                    row.CreateCell(1).SetCellValue(item.style);//款式
+                    tmp_path = string.Format("{0}/{1}.jpg", path, item.style);
+                    if (File.Exists(tmp_path))//判断图片文件是否存在
+                    {
+                        img_bytes = File.ReadAllBytes(tmp_path);//读取图片
+                        pictureIdx = book.AddPicture(img_bytes, PictureType.JPEG);
+                        anchor = new HSSFClientAnchor(0, 0, 0, 0, 2, row_index - 1, 3, row_index);
+                        pict = (HSSFPicture)patriarch.CreatePicture(anchor,
+                            pictureIdx);
+                        //pict.Resize();
+                    }
+                    else
+                    {
+                        row.CreateCell(2);//没有对应的图片
+                    }
+
+                    row.CreateCell(3).SetCellValue(item.com_nm);//名称
+                    row.CreateCell(4).SetCellValue(item.col_dr);//颜色
+                    row.CreateCell(5).SetCellValue(item.s105);//S:尺码
+                    row.CreateCell(6).SetCellValue(item.m120);//M:尺码
+                    row.CreateCell(7).SetCellValue(item.l130);//L:尺码
+                    row.CreateCell(8).SetCellValue(item.xl140);//XL:尺码
+                    row.CreateCell(9).SetCellValue(item.xxl155);//XXL:尺码
+                    row.CreateCell(10).SetCellValue(item.total_num);//总数
+                    row.CreateCell(11).SetCellValue(item.unt_pr.ToString());//吊牌价
+                    row.CreateCell(12).SetCellValue(item.total_money.ToString());//总金额
+                    //}
+
+                    #region
+                    //else//不同的店铺
+                    //{
+                    //    //row = sheet.CreateRow(row_index++);
+                    //    row.CreateCell(0).SetCellValue(first.use_nm);
+                    //    sheet.AddMergedRegion(new NPOI.SS.Util.CellRangeAddress(row_start, row_index - 1, 0, 0));
+
+                    //    row_start = row_index;
+
+                    //    first = item;
+
+                    //    row = sheet.CreateRow(row_index++);
+                    //    row.Height = 100 * 10;
+
+                    //    row.CreateCell(1).SetCellValue(item.style);//款式
+                    //    tmp_path = string.Format("{0}/{1}.jpg", path, item.style);
+                    //    if (File.Exists(tmp_path))//判断图片文件是否存在
+                    //    {
+                    //        img_bytes = File.ReadAllBytes(tmp_path);//读取图片
+                    //        pictureIdx = book.AddPicture(img_bytes, PictureType.JPEG);
+                    //        anchor = new HSSFClientAnchor(0, 0, 0, 0, 2, row_index, 3, row_index - 1);
+                    //        pict = (HSSFPicture)patriarch.CreatePicture(anchor,
+                    //            pictureIdx);
+                    //        //pict.Resize();
+                    //    }
+                    //    else
+                    //    {
+                    //        row.CreateCell(2);//没有对应的图片
+                    //    }
+
+                    //    row.CreateCell(3).SetCellValue(item.com_nm);//名称
+                    //    row.CreateCell(4).SetCellValue(item.col_dr);//颜色
+                    //    row.CreateCell(5).SetCellValue(item.s105);//S:尺码
+                    //    row.CreateCell(6).SetCellValue(item.m120);//M:尺码
+                    //    row.CreateCell(7).SetCellValue(item.l130);//L:尺码
+                    //    row.CreateCell(8).SetCellValue(item.xl140);//XL:尺码
+                    //    row.CreateCell(9).SetCellValue(item.xxl155);//XXL:尺码
+                    //    row.CreateCell(10).SetCellValue(item.xxl155);//总数
+                    //    row.CreateCell(11).SetCellValue(item.unt_pr.ToString());//吊牌价
+                    //    row.CreateCell(12).SetCellValue(item.total_money.ToString());//总金额
+                    //}
+                    #endregion
+
+                }
+            }
+
+            //将文件先保存下来
+            path = HttpContext.Current.Server.MapPath("~/static/excel");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            path = string.Format("{0}/peihuo.xls", path);
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            FileStream fs = File.Create(path);
+            book.Write(fs);
+            fs.Close();
+            return path;
         }
     }
 }

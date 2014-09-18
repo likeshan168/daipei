@@ -1,5 +1,9 @@
 ﻿
 
+
+
+
+
 --促销信息表
 create table promotions
 (
@@ -1168,8 +1172,80 @@ as
 	(
 		select use_id,style,s105,m120,l130,xl140,xxl155,
 		total_num,unt_pr,total_money
-		from PeiHuo where zhid=@zhid and style=@style
+		from eissy.dbo.PeiHuo where zhid=@zhid and style=@style
 	) p 
 	on d.Use_id=p.use_id where d.Use_id 
 	not in('G001','G002','g003','G004','Z000','Z009')
 	order by d.Use_nm
+
+go
+--获取制单号id
+
+create proc GetMan_No_Proc
+as
+	select distinct Man_no,Sys_dt from eissy.dbo.FILK02A
+go
+
+--导出 配货Excel
+create proc Out_Excel_Proc
+	@zdid varchar(30)
+as
+	select d.use_nm,p.style,s.com_nm,c.col_dr,
+	isnull(p.s105,0) s105,
+	isnull(p.m120,0) m120,
+	isnull(p.l130,0) l130,isnull(p.xl140,0) xl140,
+	isnull(p.xxl155,0) xxl155,
+	isnull(p.total_num,0) total_num,
+	isnull(p.unt_pr,0) unt_pr,
+	p.total_money from PeiHuo p left join
+	dianpu d on p.use_id=d.Use_id 
+	left join style s on s.sty_no+col_no=p.style
+	left join fila04a c on c.Col_no=s.col_no
+	where p.zhid=@zdid
+	order by d.Use_nm,p.style 
+ 
+ go
+
+ --用户表
+ create table user_info
+ (
+	user_id int primary key identity(1,1) not null,--用户id
+	user_name varchar(30) not null,--用户名(保证用户不能重复)
+	user_pass varchar(200) not null,--密码
+	role_id int not null,--角色id
+	create_date varchar(30),--创建时间
+	update_date varchar(30),--更新时间
+	last_login_date varchar(30),--最后登录时间
+	remark varchar(1000),--备注
+ )
+ go
+ --角色表
+ create table role_info
+ (
+	role_id int primary key identity(1,1) not null,--角色id
+	role_name varchar(30),--角色名称
+	remark varchar(1000)--备注
+ )
+ go
+
+ --根据用户名获取角色
+create proc get_user_role
+	@user_name varchar(30)
+as
+	select r.role_name from user_info u left join
+	role_info r on u.role_id=r.role_id
+	where user_name=@user_name
+go
+--获取用户信息的存储过程
+create proc get_user_infos
+	@user_name varchar(30),--用户名
+	@page int,--页码
+	@page_count int --页行数
+as
+	select * from 
+	(select ROW_NUMBER() over( order by user_id) as row_num
+	,user_name,user_pass,r.role_name
+	from user_info u left join role_info r on
+	r.role_id=u.role_id where user_name like @user_name+'%') tmp
+	where tmp.row_num
+	between (@page-1)*@page_count and @page*@page_count

@@ -10,9 +10,10 @@
         jquery_ui: "/Scripts/jquery-ui.min-1.11.1",
         underscore: "/Scripts/underscore.min",
         backbone: "/Scripts/backbone.min",
+        //chart: "/Scripts/Chart.min.js",
         master: "/static/myjs/peihuo/master",
         detail: "/static/myjs/peihuo/details",
-        search:"/static/myjs/peihuo/search",
+        search: "/static/myjs/peihuo/search",
         app: '/static/myjs/peihuo/app'
     }
 
